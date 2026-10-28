@@ -62,6 +62,19 @@ npm run build   # 类型检查 + 生产构建
 npm run lint    # oxlint
 ```
 
+## 部署到静态托管
+
+卡证通是纯前端模块，可以直接部署到 Vercel / Netlify 的免费子域名，不必购买域名。
+
+- **Vercel**：导入 GitHub 仓库，框架选择 Vite，构建命令 `npm run build`，输出目录 `dist`；仓库已附 `vercel.json`，也可由平台自动识别。
+- **Netlify**：导入仓库后会自动读取 `netlify.toml`（Node 22、`npm run build`、发布 `dist`）。
+- 两个平台都支持私有仓库，免费提供 `*.vercel.app` / `*.netlify.app` 子域名与 HTTPS；自定义域名是可选项。
+- 项目使用 hash 路由，静态托管不需要额外的 SPA 重写规则。
+- 部署的是前端。作业提醒依赖本机 FastAPI 后端与学习通凭证，在静态站点上会显示「后端未连接」；**不要**把当前后端直接暴露到公网，它没有登录鉴权，并保存学习通 Cookie。
+- `backend/data` 不会进入构建产物，构建只包含 `src`、`public` 与前端依赖。
+
+生产构建已验证：`npm run build` 产物通过卡证通 E2E 23/23（含 WASM / 模型加载），且无外部请求。
+
 ## 页面结构
 
 - `/#/` 启动页：校园工具箱门户，入口卡片指向卡证通与作业提醒，预留更多工具位
