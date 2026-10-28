@@ -17,6 +17,7 @@ interface ToolEntry {
   tags: string[]
   status: string
   statusTone: 'ok' | 'info'
+  note?: string
   icon: ReactNode
 }
 
@@ -39,8 +40,9 @@ const TOOLS: ToolEntry[] = [
     description:
       '连接本机教务后端，绑定学习通凭证，一键汇总全部课程作业与截止时间。',
     tags: ['作业', '截止提醒', '本地后端'],
-    status: '阶段 5',
-    statusTone: 'info',
+    status: '已上线',
+    statusTone: 'ok',
+    note: '说明：本功能目前仅在电脑端可用，手机端打开时无法读取作业。',
     icon: <ClipboardIcon />,
   },
 ]
@@ -111,6 +113,9 @@ export function HomePage() {
                       <span key={tag}>{tag}</span>
                     ))}
                   </span>
+                  {tool.note && (
+                    <span className="tool-card__note">{tool.note}</span>
+                  )}
                 </span>
                 <span className="tool-card__arrow" aria-hidden="true">
                   <ArrowRightIcon />

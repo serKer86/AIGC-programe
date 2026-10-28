@@ -507,7 +507,7 @@ export function HomeworkPage() {
           </span>
           <div>
             <h1 className="brand__title">作业提醒</h1>
-            <p className="brand__subtitle">教务作业集中提醒 · 阶段 5</p>
+            <p className="brand__subtitle">教务作业集中提醒 · 已上线</p>
           </div>
         </div>
       </header>

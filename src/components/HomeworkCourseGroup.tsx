@@ -22,8 +22,8 @@ export function HomeworkCourseGroup({
           />
         ))}
       </ul>
-      {hiddenCount > 0 && (
-        <div className="work-group__foot">
+      <div className="work-group__foot">
+        {hiddenCount > 0 && (
           <button
             type="button"
             className="work-group__toggle"
@@ -37,8 +37,8 @@ export function HomeworkCourseGroup({
               aria-hidden="true"
             />
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </li>
   )
 }

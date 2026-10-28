@@ -409,6 +409,15 @@ a.tool-card:focus-visible {
   color: var(--muted);
 }
 
+.tool-card__note {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 .tool-card__arrow {
   flex: none;
   align-self: center;
@@ -2092,6 +2101,7 @@ a.tool-card:focus-visible {
 .work-group__foot {
   display: flex;
   justify-content: flex-end;
+  min-height: 23px;
 }
 
 .work-group__toggle {
