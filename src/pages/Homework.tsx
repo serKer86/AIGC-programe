@@ -36,6 +36,9 @@ const PROJECT_DIR = 'E:\\Qoder_Projects\\toolbox'
 const PYTHON_EXE = 'E:\\Qoder_Projects\\.tools\\python\\python.exe'
 const INSTALL_COMMAND = `cd /d ${PROJECT_DIR}\n${PYTHON_EXE} -m pip install -r backend\\requirements.txt`
 const START_COMMAND = `cd /d ${PROJECT_DIR}\\backend\n${PYTHON_EXE} -m uvicorn main:app --host 127.0.0.1 --port 8000`
+const IS_LOCAL_PAGE = ['127.0.0.1', 'localhost'].includes(
+  window.location.hostname,
+)
 const URL_STORAGE_KEY = 'toolbox.homework.workListUrl'
 const TIMEOUT_HINT = '请求超时（15 秒），请确认本地后端与网络状态后重试'
 const FETCH_ALL_TIMEOUT_HINT =
@@ -629,6 +632,13 @@ export function HomeworkPage() {
               已把 Python 加入 PATH 时，可把上面的完整路径换成{' '}
               <code>python</code>。
             </p>
+            {!IS_LOCAL_PAGE && (
+              <p className="backend-guide__alt">
+                在线版只提供界面预览，无法连接你电脑上的后端；本机使用请双击{' '}
+                <code>start-dev.cmd</code>，再打开{' '}
+                <code>http://127.0.0.1:5173/#/homework</code>。
+              </p>
+            )}
 
             {error && <p className="note">上次检测：{error}</p>}
           </section>
