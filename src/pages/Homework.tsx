@@ -32,8 +32,10 @@ import { formatHomeworkDate, sortHomework } from '../lib/homework'
 type ConnectionState = 'checking' | 'online' | 'offline'
 type CredentialState = 'checking' | 'unbound' | 'bound' | 'error'
 
-const START_COMMAND =
-  'cd backend && python -m uvicorn main:app --host 127.0.0.1 --port 8000'
+const PROJECT_DIR = 'E:\\Qoder_Projects\\toolbox'
+const PYTHON_EXE = 'E:\\Qoder_Projects\\.tools\\python\\python.exe'
+const INSTALL_COMMAND = `cd /d ${PROJECT_DIR}\n${PYTHON_EXE} -m pip install -r backend\\requirements.txt`
+const START_COMMAND = `cd /d ${PROJECT_DIR}\\backend\n${PYTHON_EXE} -m uvicorn main:app --host 127.0.0.1 --port 8000`
 const URL_STORAGE_KEY = 'toolbox.homework.workListUrl'
 const TIMEOUT_HINT = '请求超时（15 秒），请确认本地后端与网络状态后重试'
 const FETCH_ALL_TIMEOUT_HINT =
@@ -548,20 +550,6 @@ export function HomeworkPage() {
             </span>
           </div>
 
-          {status === 'offline' && (
-            <div className="conn-command">
-              <p className="conn-command__label">在项目根目录启动后端</p>
-              <code>{START_COMMAND}</code>
-            </div>
-          )}
-
-          {status === 'offline' && (
-            <p className="note">
-              首次运行需先安装依赖：<code>pip install -r backend/requirements.txt</code>
-              {error ? `（${error}）` : ''}
-            </p>
-          )}
-
           <div className="conn-actions">
             <button
               type="button"
@@ -574,6 +562,77 @@ export function HomeworkPage() {
             </button>
           </div>
         </section>
+
+        {status === 'offline' && (
+          <section
+            className="card homework-setup"
+            aria-labelledby="setup-title"
+          >
+            <div className="card__head">
+              <h2 className="card__title" id="setup-title">
+                启动本地后端
+              </h2>
+              <span className="tag tag--info">3 步完成</span>
+            </div>
+
+            <p className="backend-guide__lead">
+              后端只在这台电脑上运行，需要手动启动；启动后请保持命令行窗口开启。
+            </p>
+            <ol className="backend-steps">
+              <li className="backend-step">
+                <span className="backend-step__num" aria-hidden="true">
+                  1
+                </span>
+                <div className="backend-step__body">
+                  <p className="backend-step__title">打开终端</p>
+                  <p className="backend-step__hint">
+                    按 <kbd>Win</kbd> + <kbd>R</kbd> 打开「运行」窗口，输入{' '}
+                    <code>cmd</code> 后按回车。
+                  </p>
+                </div>
+              </li>
+              <li className="backend-step">
+                <span className="backend-step__num" aria-hidden="true">
+                  2
+                </span>
+                <div className="backend-step__body">
+                  <p className="backend-step__title">安装依赖（仅第一次）</p>
+                  <div className="conn-command">
+                    <code>{INSTALL_COMMAND}</code>
+                  </div>
+                  <p className="backend-step__hint">
+                    看到 Successfully installed 即安装完成，通常需要 1–2 分钟。
+                  </p>
+                </div>
+              </li>
+              <li className="backend-step">
+                <span className="backend-step__num" aria-hidden="true">
+                  3
+                </span>
+                <div className="backend-step__body">
+                  <p className="backend-step__title">启动后端（每次使用）</p>
+                  <div className="conn-command">
+                    <code>{START_COMMAND}</code>
+                  </div>
+                  <p className="backend-step__hint">
+                    出现 Uvicorn running on http://127.0.0.1:8000
+                    即启动成功，回到本页点击「重新检测」。
+                  </p>
+                </div>
+              </li>
+            </ol>
+            <p className="backend-guide__alt">
+              更省事：双击项目根目录的 <code>start-backend.cmd</code>
+              ，无需输入命令。
+            </p>
+            <p className="backend-guide__alt">
+              已把 Python 加入 PATH 时，可把上面的完整路径换成{' '}
+              <code>python</code>。
+            </p>
+
+            {error && <p className="note">上次检测：{error}</p>}
+          </section>
+        )}
 
         <div className="bind-notice homework-notice" role="note">
           <ShieldIcon />
@@ -906,27 +965,6 @@ export function HomeworkPage() {
             )}
           </section>
         )}
-
-        <section className="card homework-stage" aria-labelledby="stage-title">
-          <div className="card__head">
-            <h2 className="card__title" id="stage-title">
-              本阶段内容
-            </h2>
-            <span className="tag tag--info">阶段 5</span>
-          </div>
-          <ul className="homework-list">
-            <li>一键发现全部课程并汇总作业，按课程与标题自动去重</li>
-            <li>同一门课程默认收起为最紧急的一条，右下角可展开全部作业</li>
-            <li>保留单门课程拉取，可粘贴课程页或作业列表页 URL</li>
-            <li>进入页面自动恢复上次同步结果，并显示课程范围与同步时间</li>
-            <li>单门接口 15 秒超时，全部课程拉取最长等待 120 秒</li>
-            <li>部分课程失败不影响其他课程，会列出失败课程并可刷新重试</li>
-            <li>解绑前二次确认，页面底部固定展示解析免责声明</li>
-          </ul>
-          <p className="note">
-            登录过期会提示重新绑定；页面结构变化时返回解析提示，不会自动提交作业。
-          </p>
-        </section>
       </main>
 
       <AppFooter message="作业数据仅在本机处理，后端服务不对局域网开放" />
