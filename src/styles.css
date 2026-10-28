@@ -2133,8 +2133,8 @@ a.tool-card:focus-visible {
 .work-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 14px;
+  gap: 6px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: #fbfcff;
@@ -2168,7 +2168,7 @@ a.tool-card:focus-visible {
 
 .work-item__title {
   margin: 0;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -2347,14 +2347,43 @@ a.tool-card:focus-visible {
   }
 
   .homework-work .work-items {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .homework-work .work-group.is-expanded {
-    grid-column: 1 / -1;
+  .homework-work .work-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px 14px;
+    padding: 10px 14px;
+  }
+
+  .homework-work .work-item__head {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .homework-work .work-item__course {
+    max-width: 180px;
+    margin-right: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .homework-work .work-item__title {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .homework-work .work-item__meta {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 10px;
   }
 
   .app--kzt {

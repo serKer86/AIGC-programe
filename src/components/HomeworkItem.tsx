@@ -42,7 +42,9 @@ export function HomeworkItem({ item }: { item: HomeworkItemData }) {
         </span>
         {urgent && <span className="tag tag--error">紧急</span>}
       </div>
-      <p className="work-item__title">{item.title}</p>
+      <p className="work-item__title" title={item.title}>
+        {item.title}
+      </p>
       <div className="work-item__meta">
         <span>{deadlineLabel(item.deadline)}</span>
         <span className={`work-item__remaining${urgent ? ' is-urgent' : ''}`}>

@@ -32,10 +32,10 @@ import { formatHomeworkDate, sortHomework } from '../lib/homework'
 type ConnectionState = 'checking' | 'online' | 'offline'
 type CredentialState = 'checking' | 'unbound' | 'bound' | 'error'
 
-const PROJECT_DIR = 'E:\\Qoder_Projects\\toolbox'
-const PYTHON_EXE = 'E:\\Qoder_Projects\\.tools\\python\\python.exe'
-const INSTALL_COMMAND = `cd /d ${PROJECT_DIR}\n${PYTHON_EXE} -m pip install -r backend\\requirements.txt`
-const START_COMMAND = `cd /d ${PROJECT_DIR}\\backend\n${PYTHON_EXE} -m uvicorn main:app --host 127.0.0.1 --port 8000`
+const PORTABLE_PYTHON = 'E:\\Qoder_Projects\\.tools\\python\\python.exe'
+const INSTALL_COMMAND = 'python -m pip install -r backend\\requirements.txt'
+const START_COMMAND =
+  'cd backend\npython -m uvicorn main:app --host 127.0.0.1 --port 8000'
 const IS_LOCAL_PAGE = ['127.0.0.1', 'localhost'].includes(
   window.location.hostname,
 )
@@ -573,13 +573,14 @@ export function HomeworkPage() {
           >
             <div className="card__head">
               <h2 className="card__title" id="setup-title">
-                启动本地后端
+                首次连接：启动本地后端
               </h2>
-              <span className="tag tag--info">3 步完成</span>
+              <span className="tag tag--info">3 步</span>
             </div>
 
             <p className="backend-guide__lead">
-              后端只在这台电脑上运行，需要手动启动；启动后请保持命令行窗口开启。每个方框中的两行命令请一起复制，粘贴到命令行后按回车。
+              第一次使用请按顺序完成 3 步，以后每次只需第 3
+              步。后端只在这台电脑上运行，启动后请保持命令行窗口开启。每个方框中的命令请整段复制，粘贴到命令行后按回车。
             </p>
             <ol className="backend-steps">
               <li className="backend-step">
@@ -587,10 +588,12 @@ export function HomeworkPage() {
                   1
                 </span>
                 <div className="backend-step__body">
-                  <p className="backend-step__title">打开终端</p>
+                  <p className="backend-step__title">在项目目录打开终端</p>
                   <p className="backend-step__hint">
-                    按 <kbd>Win</kbd> + <kbd>R</kbd> 打开「运行」窗口，输入{' '}
-                    <code>cmd</code> 后按回车。
+                    打开项目文件夹 <code>toolbox</code>
+                    ，在窗口顶部地址栏输入 <code>cmd</code>
+                    后按回车；也可以按 <kbd>Win</kbd> + <kbd>R</kbd> 输入{' '}
+                    <code>cmd</code>，再手动进入项目目录。
                   </p>
                 </div>
               </li>
@@ -619,18 +622,20 @@ export function HomeworkPage() {
                   </div>
                   <p className="backend-step__hint">
                     出现 Uvicorn running on http://127.0.0.1:8000
-                    即启动成功，回到本页点击「重新检测」。
+                    即启动成功，保持窗口开启，回到本页点击「重新检测」。
                   </p>
                 </div>
               </li>
             </ol>
             <p className="backend-guide__alt">
-              更省事：双击项目根目录的 <code>start-backend.cmd</code>
-              ，无需输入命令。
+              提示「python 不是内部或外部命令」？请安装 Python 3.10+
+              并勾选 Add Python to PATH；本机便携版可用{' '}
+              <code>{PORTABLE_PYTHON}</code> 替换命令中的{' '}
+              <code>python</code>。
             </p>
             <p className="backend-guide__alt">
-              已把 Python 加入 PATH 时，可把上面的完整路径换成{' '}
-              <code>python</code>。
+              本机已配置好时，直接双击项目根目录的{' '}
+              <code>start-backend.cmd</code> 更省事；首次仍需执行第 2 步安装依赖。
             </p>
             {!IS_LOCAL_PAGE && (
               <p className="backend-guide__alt">
