@@ -579,7 +579,7 @@ export function HomeworkPage() {
             </div>
 
             <p className="backend-guide__lead">
-              后端只在这台电脑上运行，需要手动启动；启动后请保持命令行窗口开启。
+              后端只在这台电脑上运行，需要手动启动；启动后请保持命令行窗口开启。每个方框中的两行命令请一起复制，粘贴到命令行后按回车。
             </p>
             <ol className="backend-steps">
               <li className="backend-step">
