@@ -4,7 +4,12 @@ import { HomeworkPage } from './pages/Homework'
 import { KazhengtongPage } from './pages/KazhengtongPage'
 
 function readRoute(): string {
-  return window.location.hash.replace(/^#/, '') || '/'
+  const hash = window.location.hash.replace(/^#/, '')
+  if (hash) return hash
+  // 兼容 /kazhengtong 这类路径式地址（分享链接、直接在地址栏输入）
+  const path = window.location.pathname.replace(/\/+$/, '')
+  if (path && path !== '/index.html' && !path.endsWith('.html')) return path
+  return '/'
 }
 
 const TITLES: Record<string, string> = {

@@ -25,7 +25,7 @@ const TOOLS: ToolEntry[] = [
   {
     id: 'kazhengtong',
     name: '卡证通',
-    path: '/kazhengtong',
+    path: '#/kazhengtong',
     description:
       '智能抠图、换底、裁剪压缩与合规校验，生成可直接上传报名系统的证件照。',
     tags: ['四六级', '学生证', '简历', '二寸'],
@@ -36,7 +36,7 @@ const TOOLS: ToolEntry[] = [
   {
     id: 'homework',
     name: '作业提醒',
-    path: '/homework',
+    path: '#/homework',
     description:
       '连接本机教务后端，绑定学习通凭证，一键汇总全部课程作业与截止时间。',
     tags: ['作业', '截止提醒', '本地后端'],
@@ -108,31 +108,41 @@ export function HomePage() {
           </div>
 
           <div className="tool-grid">
-            {TOOLS.map((tool) => (
-            <a key={tool.id} className="tool-card" href={tool.path} target="_blank" rel="noopener noreferrer">
-                <span className="tool-card__icon">{tool.icon}</span>
-                <span className="tool-card__content">
-                  <span className="tool-card__row">
-                    <span className="tool-card__name">{tool.name}</span>
-                    <span className={`tag tag--${tool.statusTone}`}>
-                      {tool.status}
+            {TOOLS.map((tool) => {
+              const isStandalonePage = tool.path.endsWith('.html')
+              return (
+                <a
+                  key={tool.id}
+                  className="tool-card"
+                  href={tool.path}
+                  {...(isStandalonePage
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : {})}
+                >
+                  <span className="tool-card__icon">{tool.icon}</span>
+                  <span className="tool-card__content">
+                    <span className="tool-card__row">
+                      <span className="tool-card__name">{tool.name}</span>
+                      <span className={`tag tag--${tool.statusTone}`}>
+                        {tool.status}
+                      </span>
                     </span>
+                    <span className="tool-card__desc">{tool.description}</span>
+                    <span className="tool-card__tags">
+                      {tool.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </span>
+                    {tool.note && (
+                      <span className="tool-card__note">{tool.note}</span>
+                    )}
                   </span>
-                  <span className="tool-card__desc">{tool.description}</span>
-                  <span className="tool-card__tags">
-                    {tool.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                  <span className="tool-card__arrow" aria-hidden="true">
+                    <ArrowRightIcon />
                   </span>
-                  {tool.note && (
-                    <span className="tool-card__note">{tool.note}</span>
-                  )}
-                </span>
-                <span className="tool-card__arrow" aria-hidden="true">
-                  <ArrowRightIcon />
-                </span>
-              </a>
-            ))}
+                </a>
+              )
+            })}
 
             <div className="tool-card tool-card--soon">
               <span className="tool-card__icon">
