@@ -26,6 +26,8 @@ dist-ssr
 # Python
 __pycache__/
 *.pyc
+.venv/
+backend/.venv/
 
 # Local credentials and caches (must never be committed)
 backend/data/
