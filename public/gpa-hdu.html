@@ -29,6 +29,14 @@ button.del{background:#ef4444}
   <div class="result">GPA：--</div>
 </div>
 <script>
+// 与 src/lib/usage.ts 共用 toolbox.usage.v1，记录本页打开次数
+try {
+  const key = 'toolbox.usage.v1'
+  const usage = JSON.parse(localStorage.getItem(key) || '{}')
+  usage['gpa-calc'] = (usage['gpa-calc'] | 0) + 1
+  localStorage.setItem(key, JSON.stringify(usage))
+} catch (e) {}
+
 const scoreMap = {
   '优秀':4.5,'良好':3.5,'中等':2.5,'及格':1.5,'不及格':0,
   '90-100':4.5,'85-89':4.0,'82-84':3.7,'78-81':3.3,'75-77':3.0,

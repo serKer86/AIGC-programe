@@ -134,3 +134,58 @@ export function AlertIcon(props: IconProps) {
     </svg>
   )
 }
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <circle cx="11" cy="11" r="6.4" />
+      <path d="M15.8 15.8L20 20" />
+    </svg>
+  )
+}
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true" {...props}>
+      <path d="M6.4 6.4L17.6 17.6M17.6 6.4L6.4 17.6" />
+    </svg>
+  )
+}
+
+export function CompressIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
+      <path d="M8 8.4L12 12l-4 3.6" />
+      <path d="M16 8.4L12 12l4 3.6" />
+    </svg>
+  )
+}
+
+export function LinkIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M13.6 6.4h4v4" />
+      <path d="M17.6 6.4l-8.2 8.2" />
+      <path d="M17 13.6v4.4a1.6 1.6 0 01-1.6 1.6H6.6A1.6 1.6 0 015 18V9.6A1.6 1.6 0 016.6 8H11" />
+    </svg>
+  )
+}
+
+export function SlidersIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true" {...props}>
+      <path d="M4 7.5h16M4 16.5h16" />
+      <circle cx="9.5" cy="7.5" r="2.4" />
+      <circle cx="15" cy="16.5" r="2.4" />
+    </svg>
+  )
+}
+
+export function GripIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true" {...props}>
+      <path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01" />
+    </svg>
+  )
+}

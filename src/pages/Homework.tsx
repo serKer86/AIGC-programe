@@ -649,13 +649,6 @@ export function HomeworkPage() {
           </section>
         )}
 
-        <div className="bind-notice homework-notice" role="note">
-          <ShieldIcon />
-          <p>
-            凭证仅加密存储在本地，不会上传至任何第三方服务器；本工具只读，不包含自动提交作业功能。
-          </p>
-        </div>
-
         {status === 'online' && (
           <section
             className="card homework-credential"
@@ -828,6 +821,13 @@ export function HomeworkPage() {
             )}
           </section>
         )}
+
+        <div className="bind-notice homework-notice" role="note">
+          <ShieldIcon />
+          <p>
+            凭证仅加密存储在本地，不会上传至任何第三方服务器；本工具只读，不包含自动提交作业功能。
+          </p>
+        </div>
 
         {status === 'online' && credential === 'bound' && (
           <section className="card homework-work" aria-labelledby="work-list-title">
