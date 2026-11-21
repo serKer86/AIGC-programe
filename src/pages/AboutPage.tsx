@@ -2,6 +2,7 @@
 import { SCHOOL_EMBLEM_SRC } from '../components/SchoolBrand'
 import { ArrowLeftIcon, ShieldIcon } from '../components/icons'
 import { isStaticHosting } from '../lib/env'
+import { resetDisclaimer } from '../lib/consent'
 
 interface ToolRow {
   name: string
@@ -177,6 +178,17 @@ export function AboutPage() {
               使用本站时应遵守国家网络相关法律法规及学校网络管理规定，不得用于违规用途。
             </p>
           </div>
+          <button
+            type="button"
+            className="btn btn--ghost btn--sm about-legal__replay"
+            onClick={() => {
+              resetDisclaimer()
+              window.location.hash = '#/'
+              window.location.reload()
+            }}
+          >
+            重新播放开屏声明
+          </button>
         </section>
 
         <section className="card about-card" aria-labelledby="about-tech">
