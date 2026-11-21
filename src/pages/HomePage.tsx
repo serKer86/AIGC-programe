@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+﻿import { useMemo, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { AppFooter } from '../components/AppFooter'
 import { HeroCarousel, type HeroSlide } from '../components/HeroCarousel'
@@ -17,6 +17,7 @@ import {
   SlidersIcon,
 } from '../components/icons'
 import { useDragSort } from '../hooks/useDragSort'
+import { SCHOOL_EMBLEM_SRC } from '../components/SchoolBrand'
 import { clearUsage, rankToolIds, readUsage } from '../lib/usage'
 import { applyToolOrder, readToolOrder, saveToolOrder } from '../lib/toolOrder'
 
@@ -271,8 +272,14 @@ export function HomePage() {
     <div className={hasFrequent ? 'app app--home app--frequent' : 'app app--home'}>
       <header className="app-header">
         <div className="brand">
-          <span className="brand__mark">
-            <GridIcon />
+          <span className="brand__mark brand__mark--school">
+            <img
+              src={SCHOOL_EMBLEM_SRC}
+              alt="杭州电子科技大学校徽"
+              width={34}
+              height={34}
+              decoding="async"
+            />
           </span>
           <div>
             <h1 className="brand__title">校园工具箱</h1>
