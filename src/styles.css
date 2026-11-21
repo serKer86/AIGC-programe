@@ -3813,3 +3813,278 @@ select.field__input {
   width: 34px;
   height: 34px;
 }
+/* ---------- 品牌位英文名 ---------- */
+
+.brand__en {
+  margin: 3px 0 0;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #a5b2c4;
+  text-transform: uppercase;
+}
+
+/* ---------- 受限功能标签 ---------- */
+
+.tag--warn {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+/* ---------- 页脚关于链接 ---------- */
+
+.app-footer__sep {
+  color: #cbd5e1;
+}
+
+.app-footer__link {
+  color: #9aa7bb;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+}
+
+.app-footer__link:hover,
+.app-footer__link:focus-visible {
+  color: var(--primary);
+  border-bottom-color: currentColor;
+}
+
+/* ---------- 免责声明弹层 ---------- */
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.46);
+  backdrop-filter: blur(3px);
+}
+
+.gate__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: min(86vh, 720px);
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.24);
+}
+
+.gate__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px 12px;
+}
+
+.gate__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.gate__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.gate__title {
+  margin: 0;
+  font-size: 17px;
+}
+
+.gate__body {
+  padding: 0 20px;
+  overflow-y: auto;
+}
+
+.gate__list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.gate__list strong {
+  color: var(--text);
+}
+
+.gate__list code,
+.about-list code,
+.about-legal code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: #f1f5f9;
+  font-size: 12px;
+}
+
+.gate__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.gate__more {
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.gate__more:hover {
+  text-decoration: underline;
+}
+
+.gate__actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* ---------- 关于页 ---------- */
+
+.app--about .app-main {
+  display: grid;
+  gap: 18px;
+}
+
+.about-card .card__desc + .card__desc {
+  margin-top: 8px;
+}
+
+.about-tools,
+.about-log {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-tools__item {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8faff;
+}
+
+.about-tools__name {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.about-tools__name:hover {
+  color: var(--primary);
+}
+
+.about-tools__what {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.about-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.about-legal {
+  display: grid;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.about-legal p {
+  margin: 0;
+}
+
+.about-legal strong {
+  color: var(--text);
+}
+
+.about-dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.about-dl__row {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.about-dl dt {
+  color: var(--muted);
+}
+
+.about-dl dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.about-log li {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.about-log__ver {
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .about-tools__item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .about-tools__what {
+    grid-column: 1 / -1;
+  }
+
+  .gate__actions {
+    width: 100%;
+  }
+
+  .gate__actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app--about {
+    max-width: 960px;
+  }
+}

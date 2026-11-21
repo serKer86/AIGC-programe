@@ -5,7 +5,9 @@ import { KazhengtongPage } from './pages/KazhengtongPage'
 import { CompressPage } from './pages/CompressPage'
 import { LinksPage } from './pages/LinksPage'
 import { GpaPage } from './pages/GpaPage'
+import { AboutPage } from './pages/AboutPage'
 import { CornerSeal } from './components/SchoolBrand'
+import { DisclaimerGate } from './components/DisclaimerGate'
 import { recordToolOpen, toolIdForRoute } from './lib/usage'
 
 function readRoute(): string {
@@ -23,6 +25,7 @@ const TITLES: Record<string, string> = {
   '/compress': '图片压缩 · 压到指定 KB',
   '/links': '校园网址 · 常用入口直达',
   '/gpa': 'GPA 计算 · 杭电 5 分制',
+  '/about': '关于本网站 · 校园工具箱',
   '/': '校园工具箱 · 证件照一次做对',
 }
 
@@ -32,6 +35,7 @@ function renderRoute(route: string): ReactNode {
   if (route === '/compress') return <CompressPage />
   if (route === '/links') return <LinksPage />
   if (route === '/gpa') return <GpaPage />
+  if (route === '/about') return <AboutPage />
   return <HomePage />
 }
 
@@ -58,6 +62,7 @@ export default function App() {
     <>
       {renderRoute(route)}
       <CornerSeal />
+      <DisclaimerGate />
     </>
   )
 }

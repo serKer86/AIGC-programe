@@ -16,6 +16,12 @@ export function AppFooter({
       </p>
       <p className="app-footer__line app-footer__school">
         <SchoolMark />
+        <span className="app-footer__sep" aria-hidden="true">
+          ·
+        </span>
+        <a className="app-footer__link" href="#/about">
+          关于本网站
+        </a>
       </p>
     </footer>
   )

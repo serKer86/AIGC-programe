@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { AppFooter } from '../components/AppFooter'
 import { HeroCarousel, type HeroSlide } from '../components/HeroCarousel'
@@ -20,6 +20,7 @@ import { useDragSort } from '../hooks/useDragSort'
 import { SCHOOL_EMBLEM_SRC } from '../components/SchoolBrand'
 import { clearUsage, rankToolIds, readUsage } from '../lib/usage'
 import { applyToolOrder, readToolOrder, saveToolOrder } from '../lib/toolOrder'
+import { isStaticHosting } from '../lib/env'
 
 interface HeroCopy {
   eyebrow: string
@@ -38,6 +39,8 @@ interface ToolEntry {
   keywords: string[]
   status: string
   statusTone: 'ok' | 'info'
+  /** 依赖本机后端，静态托管不可用 */
+  localOnly?: boolean
   note?: string
   hero?: HeroCopy
   icon: ReactNode
@@ -115,6 +118,7 @@ const TOOLS: ToolEntry[] = [
     ],
     status: '已上线',
     statusTone: 'ok',
+    localOnly: true,
     note: '本功能目前仅在电脑端可用，手机端打开时无法读取作业。',
     icon: <ClipboardIcon />,
   },
@@ -138,6 +142,7 @@ const TOOLS: ToolEntry[] = [
     ],
     status: '已上线',
     statusTone: 'ok',
+    localOnly: true,
     icon: <GridIcon />,
   },
   {
@@ -284,6 +289,7 @@ export function HomePage() {
           <div>
             <h1 className="brand__title">校园工具箱</h1>
             <p className="brand__subtitle">本地优先的校园办事工具</p>
+            <p className="brand__en">HANGZHOU DIANZI UNIVERSITY</p>
           </div>
         </div>
 
@@ -431,6 +437,9 @@ export function HomePage() {
                         <span className={`tag tag--${tool.statusTone}`}>
                           {tool.status}
                         </span>
+                        {isStaticHosting() && tool.localOnly && (
+                          <span className="tag tag--warn">公网不可用</span>
+                        )}
                       </span>
                       <span className="tool-card__desc">
                         {tool.description}
