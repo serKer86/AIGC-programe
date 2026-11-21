@@ -24,8 +24,21 @@
   --shadow-raise: inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 1px 2px rgba(15, 23, 42, 0.05), 0 14px 30px rgba(15, 23, 42, 0.09);
   --tool-hue: 221;
-  --link-hue: 213;
+  --link-hue: 213;  --surface-soft: #f8faff;
+  --surface-mute: #f1f5f9;
+  --field-bg: #ffffff;
+  --success-text: #047857;
+  --success-border: #d1fae5;
+  --danger-text: #b91c1c;
+  --danger-border: #fecaca;
+  --warn-soft: #fff7ed;
+  --warn-text: #b45309;
+  --warn-border: #fed7aa;
+  --surface-glass: rgba(255, 255, 255, 0.96);
+  --surface-glass-2: rgba(255, 255, 255, 0.82);
+  --checker: #d7e0ee;
 }
+
 
 * {
   box-sizing: border-box;
@@ -159,8 +172,8 @@ img {
   padding: 5px 10px;
   border-radius: 999px;
   background: var(--success-soft);
-  border: 1px solid #d1fae5;
-  color: #047857;
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
   font-size: 12px;
   font-weight: 600;
 }
@@ -388,13 +401,13 @@ img {
   width: 100%;
   margin-top: 20px;
   color: var(--primary-strong);
-  background: #fff;
+  background: var(--field-bg);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
 }
 
 .hero .hero__cta:hover:not(:disabled) {
   color: var(--primary-strong);
-  background: #f5f9ff;
+  background: var(--surface-soft);
 }
 
 .hero__facts {
@@ -644,7 +657,7 @@ a.tool-card:focus-visible {
 .tool-card__tags span {
   padding: 2px 7px;
   border-radius: 6px;
-  background: #f4f7fc;
+  background: var(--surface-soft);
   font-size: 11px;
   color: var(--muted);
 }
@@ -661,7 +674,7 @@ a.tool-card:focus-visible {
 .tool-card__arrow {
   flex: none;
   align-self: center;
-  color: #94a3b8;
+  color: var(--muted);
 }
 
 .tool-card__arrow svg {
@@ -671,7 +684,7 @@ a.tool-card:focus-visible {
 
 .tool-card--soon {
   border-style: dashed;
-  background: #fbfcff;
+  background: var(--surface-soft);
   box-shadow: none;
 }
 
@@ -717,12 +730,12 @@ a.tool-card:focus-visible {
 }
 
 .tool-card--soon .tool-card__icon {
-  background: #f1f5f9;
-  color: #94a3b8;
+  background: var(--surface-mute);
+  color: var(--muted);
 }
 
 .tag--soon {
-  background: #f1f5f9;
+  background: var(--surface-mute);
   color: var(--muted);
 }
 
@@ -784,7 +797,7 @@ a.tool-card:focus-visible {
   gap: 8px;
   max-width: 100%;
   padding: 7px 12px 7px 8px;
-  border: 1px solid #dce6f7;
+  border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--primary-soft);
   color: inherit;
@@ -872,7 +885,7 @@ a.tool-card:focus-visible {
   font-size: 11.5px;
   font-weight: 700;
   color: var(--muted);
-  background: #f1f5f9;
+  background: var(--surface-mute);
   border: 1.5px solid var(--border);
   transition:
     background 0.2s ease,
@@ -959,9 +972,9 @@ a.tool-card:focus-visible {
   min-height: 196px;
   padding: 26px 18px;
   text-align: center;
-  border: 1.5px dashed #cbd5e1;
+  border: 1.5px dashed var(--border);
   border-radius: var(--radius-md);
-  background: #fbfcff;
+  background: var(--surface-soft);
   cursor: pointer;
   transition:
     border-color 0.18s ease,
@@ -971,7 +984,7 @@ a.tool-card:focus-visible {
 
 .dropzone:hover {
   border-color: #93b4f8;
-  background: #f6f9ff;
+  background: var(--surface-soft);
 }
 
 .dropzone:focus-visible {
@@ -1071,13 +1084,13 @@ a.tool-card:focus-visible {
 
 .btn--ghost {
   color: var(--text-secondary);
-  background: #fff;
+  background: var(--field-bg);
   border-color: var(--border);
 }
 
 .btn--ghost:hover:not(:disabled) {
   border-color: #c9d4e8;
-  background: #f8fafc;
+  background: var(--surface-soft);
 }
 
 .btn--danger {
@@ -1132,7 +1145,7 @@ a.tool-card:focus-visible {
   padding: 10px 12px;
   border-radius: 10px;
   background: var(--danger-soft);
-  color: #b91c1c;
+  color: var(--danger-text);
   font-size: 12.5px;
   line-height: 1.5;
 }
@@ -1164,7 +1177,7 @@ a.tool-card:focus-visible {
 
 .tag--ok {
   background: var(--success-soft);
-  color: #047857;
+  color: var(--success-text);
 }
 
 .tag--info {
@@ -1174,7 +1187,7 @@ a.tool-card:focus-visible {
 
 .tag--error {
   background: var(--danger-soft);
-  color: #b91c1c;
+  color: var(--danger-text);
 }
 
 .photo-frame {
@@ -1184,7 +1197,7 @@ a.tool-card:focus-visible {
   margin-top: 14px;
   padding: 10px;
   border-radius: var(--radius-md);
-  background: #eef2f8;
+  background: var(--surface-mute);
 }
 
 .photo-frame img {
@@ -1208,7 +1221,7 @@ a.tool-card:focus-visible {
   justify-content: space-between;
   gap: 16px;
   padding: 10px 2px;
-  border-bottom: 1px solid #f0f3f9;
+  border-bottom: 1px solid var(--border);
 }
 
 .meta-list > div:last-child {
@@ -1257,14 +1270,14 @@ a.tool-card:focus-visible {
   margin-top: 14px;
   padding: 10px;
   overflow: hidden;
-  border: 1px solid #dbe3ef;
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background-color: #f0f4fa;
   background-image:
-    linear-gradient(45deg, #d7e0ee 25%, transparent 25%),
-    linear-gradient(-45deg, #d7e0ee 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #d7e0ee 75%),
-    linear-gradient(-45deg, transparent 75%, #d7e0ee 75%);
+    linear-gradient(45deg, var(--checker) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker) 75%);
   background-size: 18px 18px;
   background-position:
     0 0,
@@ -1275,7 +1288,7 @@ a.tool-card:focus-visible {
 
 .matte-stage.is-backdrop {
   background-image: none;
-  background-color: #e8eef7;
+  background-color: var(--surface-mute);
 }
 
 .matte-stage__image,
@@ -1353,7 +1366,7 @@ a.tool-card:focus-visible {
   margin-top: 14px;
   padding: 24px 16px;
   text-align: center;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--danger-border);
   border-radius: var(--radius-md);
   background: var(--danger-soft);
 }
@@ -1364,8 +1377,8 @@ a.tool-card:focus-visible {
   border-radius: 14px;
   display: grid;
   place-items: center;
-  color: #b91c1c;
-  background: #fee2e2;
+  color: var(--danger-text);
+  background: var(--danger-soft);
 }
 
 .matte-error__icon svg {
@@ -1377,7 +1390,7 @@ a.tool-card:focus-visible {
   margin: 2px 0 0;
   font-size: 14.5px;
   font-weight: 700;
-  color: #991b1b;
+  color: var(--danger-text);
 }
 
 .matte-error__desc {
@@ -1385,7 +1398,7 @@ a.tool-card:focus-visible {
   margin: 0;
   font-size: 12.5px;
   line-height: 1.6;
-  color: #b91c1c;
+  color: var(--danger-text);
 }
 
 .matte-alert {
@@ -1396,7 +1409,7 @@ a.tool-card:focus-visible {
   padding: 10px 12px;
   border-radius: 10px;
   background: var(--danger-soft);
-  color: #b91c1c;
+  color: var(--danger-text);
   font-size: 12.5px;
   line-height: 1.5;
 }
@@ -1446,8 +1459,8 @@ a.tool-card:focus-visible {
 /* ---------- Spec ---------- */
 
 .tag--warn {
-  background: #fff7ed;
-  color: #b45309;
+  background: var(--warn-soft);
+  color: var(--warn-text);
 }
 
 .spec-grid {
@@ -1466,7 +1479,7 @@ a.tool-card:focus-visible {
   text-align: left;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: #f8fafc;
+  background: var(--surface-soft);
   color: var(--text);
   cursor: pointer;
   transition:
@@ -1478,7 +1491,7 @@ a.tool-card:focus-visible {
 
 .spec-option:hover {
   border-color: #c7d6f5;
-  background: #f5f8ff;
+  background: var(--surface-soft);
 }
 
 .spec-option.is-selected {
@@ -1549,7 +1562,7 @@ a.tool-card:focus-visible {
   padding: 7px 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--field-bg);
   color: var(--text-secondary);
   font-size: 12.5px;
   font-weight: 600;
@@ -1591,7 +1604,7 @@ a.tool-card:focus-visible {
   text-align: left;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--field-bg);
   color: var(--text);
   cursor: pointer;
   transition:
@@ -1670,17 +1683,17 @@ a.tool-card:focus-visible {
   margin-top: 16px;
   padding: 14px;
   overflow: hidden;
-  border: 1px solid #dbe3ef;
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background-color: #eef2f8;
+  background-color: var(--surface-mute);
 }
 
 .spec-stage.is-cutout {
   background-image:
-    linear-gradient(45deg, #d7e0ee 25%, transparent 25%),
-    linear-gradient(-45deg, #d7e0ee 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #d7e0ee 75%),
-    linear-gradient(-45deg, transparent 75%, #d7e0ee 75%);
+    linear-gradient(45deg, var(--checker) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker) 75%);
   background-size: 18px 18px;
   background-position:
     0 0,
@@ -1717,10 +1730,10 @@ a.tool-card:focus-visible {
   gap: 8px;
   margin: 12px 0 0;
   padding: 10px 12px;
-  border: 1px solid #fed7aa;
+  border: 1px solid var(--warn-border);
   border-radius: 10px;
-  background: #fff7ed;
-  color: #b45309;
+  background: var(--warn-soft);
+  color: var(--warn-text);
   font-size: 12.5px;
   line-height: 1.5;
 }
@@ -1735,7 +1748,7 @@ a.tool-card:focus-visible {
 .spec-notes {
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid #f0f3f9;
+  border-top: 1px solid var(--border);
 }
 
 .spec-notes ul {
@@ -1777,7 +1790,7 @@ a.tool-card:focus-visible {
   padding: 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .compliance__head {
@@ -1808,12 +1821,12 @@ a.tool-card:focus-visible {
   padding: 8px 10px;
   border: 1px solid #edf1f7;
   border-radius: 10px;
-  background: #fff;
+  background: var(--field-bg);
 }
 
 .compliance__item.is-fail {
-  border-color: #fed7aa;
-  background: #fffaf4;
+  border-color: var(--warn-border);
+  background: var(--warn-soft);
 }
 
 .compliance__icon {
@@ -1825,12 +1838,12 @@ a.tool-card:focus-visible {
   place-items: center;
   border-radius: 50%;
   background: var(--success-soft);
-  color: #047857;
+  color: var(--success-text);
 }
 
 .compliance__item.is-fail .compliance__icon {
-  background: #fff1e6;
-  color: #b45309;
+  background: var(--warn-soft);
+  color: var(--warn-text);
 }
 
 .compliance__icon svg {
@@ -1862,7 +1875,7 @@ a.tool-card:focus-visible {
 .compliance__reason {
   font-size: 11.5px;
   line-height: 1.5;
-  color: #b45309;
+  color: var(--warn-text);
 }
 
 .compliance__state {
@@ -1870,11 +1883,11 @@ a.tool-card:focus-visible {
   margin-top: 2px;
   font-size: 11px;
   font-weight: 700;
-  color: #047857;
+  color: var(--success-text);
 }
 
 .compliance__item.is-fail .compliance__state {
-  color: #b45309;
+  color: var(--warn-text);
 }
 
 .compliance__loading {
@@ -1888,7 +1901,7 @@ a.tool-card:focus-visible {
   margin: 10px 0 0;
   font-size: 12px;
   line-height: 1.55;
-  color: #b45309;
+  color: var(--warn-text);
 }
 
 /* ---------- Tips ---------- */
@@ -1943,7 +1956,7 @@ a.tool-card:focus-visible {
   padding-top: 2px;
   font-size: 11.5px;
   line-height: 1.5;
-  color: #94a3b8;
+  color: var(--muted);
   text-align: center;
 }
 
@@ -2095,7 +2108,7 @@ a.tool-card:focus-visible {
   display: grid;
   place-items: center;
   color: var(--primary);
-  background: #fff;
+  background: var(--field-bg);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
@@ -2232,7 +2245,7 @@ a.tool-card:focus-visible {
   font-size: 11.5px;
   padding: 1px 5px;
   border-radius: 5px;
-  background: #e8eef7;
+  background: var(--surface-mute);
 }
 
 .backend-guide__alt {
@@ -2266,7 +2279,7 @@ a.tool-card:focus-visible {
   font-size: 11.5px;
   padding: 1px 5px;
   border-radius: 5px;
-  background: #eef2f8;
+  background: var(--surface-mute);
   overflow-wrap: anywhere;
 }
 
@@ -2294,7 +2307,7 @@ a.tool-card:focus-visible {
   padding: 0 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--field-bg);
   color: var(--text);
   font-size: 15px;
   transition:
@@ -2303,7 +2316,7 @@ a.tool-card:focus-visible {
 }
 
 .field__input::placeholder {
-  color: #94a3b8;
+  color: var(--muted);
 }
 
 .field__input:focus {
@@ -2313,7 +2326,7 @@ a.tool-card:focus-visible {
 }
 
 .field__input:disabled {
-  background: #f1f5f9;
+  background: var(--surface-mute);
   color: var(--muted);
 }
 
@@ -2359,7 +2372,7 @@ a.tool-card:focus-visible {
   display: grid;
   place-items: center;
   color: var(--success);
-  background: #fff;
+  background: var(--field-bg);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
@@ -2396,7 +2409,7 @@ a.tool-card:focus-visible {
   padding: 12px 14px;
   border: 1px solid #dbeafe;
   border-radius: var(--radius-md);
-  background: #eff6ff;
+  background: var(--primary-soft);
   color: #1e3a8a;
   font-size: 12.5px;
   line-height: 1.6;
@@ -2456,8 +2469,8 @@ a.tool-card:focus-visible {
   margin: 12px 0 0;
   padding: 10px 12px;
   border-radius: 10px;
-  background: #fff7ed;
-  color: #b45309;
+  background: var(--warn-soft);
+  color: var(--warn-text);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -2548,12 +2561,12 @@ a.tool-card:focus-visible {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .work-item.is-urgent {
-  border-color: #fecaca;
-  background: #fff8f8;
+  border-color: var(--danger-border);
+  background: var(--danger-soft);
 }
 
 .work-item__head {
@@ -2586,7 +2599,7 @@ a.tool-card:focus-visible {
 }
 
 .work-item.is-urgent .work-item__title {
-  color: #991b1b;
+  color: var(--danger-text);
 }
 
 .work-item__meta {
@@ -2619,7 +2632,7 @@ a.tool-card:focus-visible {
   text-align: center;
   border: 1.5px dashed #d7dfec;
   border-radius: var(--radius-md);
-  background: #fbfcff;
+  background: var(--surface-soft);
   color: var(--muted);
 }
 
@@ -2644,30 +2657,30 @@ a.tool-card:focus-visible {
 .work-meta {
   margin: 14px 0 0;
   font-size: 11.5px;
-  color: #94a3b8;
+  color: var(--muted);
   text-align: right;
 }
 
 .unbind-confirm {
   margin-top: 14px;
   padding: 14px;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--danger-border);
   border-radius: var(--radius-md);
-  background: #fff8f8;
+  background: var(--danger-soft);
 }
 
 .unbind-confirm__title {
   margin: 0;
   font-size: 14px;
   font-weight: 700;
-  color: #991b1b;
+  color: var(--danger-text);
 }
 
 .unbind-confirm__hint {
   margin: 6px 0 0;
   font-size: 12.5px;
   line-height: 1.6;
-  color: #b91c1c;
+  color: var(--danger-text);
 }
 
 .unbind-confirm__actions {
@@ -2688,8 +2701,8 @@ a.tool-card:focus-visible {
   justify-content: center;
   gap: 8px;
   padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  border-top: 1px solid #dbe3ef;
-  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--border);
+  background: var(--surface-glass);
   backdrop-filter: blur(8px);
   color: var(--text-secondary);
   font-size: 11.5px;
@@ -2816,11 +2829,11 @@ select.field__input {
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--field-bg);
 }
 
 .compress-row--failed {
-  border-color: #fbd5d5;
+  border-color: var(--danger-border);
   background: var(--danger-soft);
 }
 
@@ -2956,12 +2969,12 @@ select.field__input {
 
 .link-tile.is-managing .link-tile__face {
   border-color: var(--border);
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .link-tile.is-managing .link-tile__face:hover {
   border-color: var(--border);
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .link-tile__icon {
@@ -3027,7 +3040,7 @@ select.field__input {
   place-items: center;
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: #fff;
+  background: var(--field-bg);
   color: var(--muted);
   cursor: pointer;
   transition:
@@ -3053,7 +3066,7 @@ select.field__input {
 }
 
 .link-tile__act--danger:hover {
-  border-color: #f4c9c4;
+  border-color: var(--danger-border);
   background: var(--danger-soft);
   color: var(--danger);
 }
@@ -3127,7 +3140,7 @@ select.field__input {
     width: 32px;
     height: 32px;
     border-radius: 10px;
-    background: #fff;
+    background: var(--field-bg);
   }
 
   .app--compress {
@@ -3451,7 +3464,7 @@ select.field__input {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .gpa-row__name {
@@ -3586,7 +3599,7 @@ select.field__input {
   gap: 12px;
   padding: 6px 10px;
   border-radius: 10px;
-  background: #f8faff;
+  background: var(--surface-soft);
   font-size: 14px;
 }
 
@@ -3681,8 +3694,8 @@ select.field__input {
   margin: 0 0 12px;
   padding: 8px 12px;
   border-radius: 10px;
-  background: #fff7ed;
-  color: #9a3412;
+  background: var(--warn-soft);
+  color: var(--warn-text);
   font-size: 13px;
 }
 
@@ -3721,8 +3734,8 @@ select.field__input {
   margin: 0 0 12px;
   padding: 10px 12px;
   border-radius: 10px;
-  background: #eff6ff;
-  color: #1e40af;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
   font-size: 13px;
   line-height: 1.6;
 }
@@ -3752,7 +3765,7 @@ select.field__input {
 .school-mark__text {
   font-size: 12px;
   font-weight: 500;
-  color: #9aa7bb;
+  color: var(--muted);
   letter-spacing: 0.04em;
 }
 
@@ -3771,7 +3784,7 @@ select.field__input {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.82);
+    background: var(--surface-glass-2);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
       0 8px 22px rgba(15, 23, 42, 0.08);
     backdrop-filter: blur(6px);
@@ -3802,7 +3815,7 @@ select.field__input {
 }
 /* 首页品牌位改用校徽（白底圆角方块，和其余页面的图标块保持同一尺寸语言） */
 .brand__mark--school {
-  background: #fff;
+  background: var(--field-bg);
   border: 1px solid rgba(37, 99, 235, 0.12);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 18px rgba(15, 23, 42, 0.1);
   padding: 4px;
@@ -3821,15 +3834,15 @@ select.field__input {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.16em;
-  color: #a5b2c4;
+  color: var(--muted);
   text-transform: uppercase;
 }
 
 /* ---------- 受限功能标签 ---------- */
 
 .tag--warn {
-  background: #fff7ed;
-  color: #b45309;
+  background: var(--warn-soft);
+  color: var(--warn-text);
 }
 
 /* ---------- 页脚关于链接 ---------- */
@@ -3839,7 +3852,7 @@ select.field__input {
 }
 
 .app-footer__link {
-  color: #9aa7bb;
+  color: var(--muted);
   text-decoration: none;
   border-bottom: 1px dashed transparent;
 }
@@ -3925,7 +3938,7 @@ select.field__input {
 .about-legal code {
   padding: 1px 5px;
   border-radius: 5px;
-  background: #f1f5f9;
+  background: var(--surface-mute);
   font-size: 12px;
 }
 
@@ -3983,7 +3996,7 @@ select.field__input {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: #f8faff;
+  background: var(--surface-soft);
 }
 
 .about-tools__name {
@@ -4087,5 +4100,113 @@ select.field__input {
 @media (min-width: 1024px) {
   .app--about {
     max-width: 960px;
+  }
+}
+.about-links {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.about-links li {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13.5px;
+}
+
+.about-links__key {
+  color: var(--muted);
+}
+
+.about-links__val {
+  color: var(--text-secondary);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+a.about-links__val {
+  color: var(--primary);
+}
+
+a.about-links__val:hover {
+  text-decoration: underline;
+}
+/* ================= 深色模式 ================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #0b1220;
+    --surface: #131c2b;
+    --surface-soft: #182234;
+    --surface-mute: #1e2a3d;
+    --field-bg: #101a2a;
+    --surface-glass: rgba(19, 28, 43, 0.94);
+    --surface-glass-2: rgba(19, 28, 43, 0.86);
+    --text: #e8eefb;
+    --text-secondary: #a9b7cc;
+    --text-soft: #bcc9dc;
+    --muted: #7f92ac;
+    --border: #26334b;
+    --primary: #6aa8ff;
+    --primary-strong: #9cc4ff;
+    --primary-soft: rgba(106, 168, 255, 0.16);
+    --success: #34d399;
+    --success-soft: rgba(52, 211, 153, 0.14);
+    --success-text: #6ee7b7;
+    --success-border: rgba(52, 211, 153, 0.32);
+    --danger: #f87171;
+    --danger-soft: rgba(248, 113, 113, 0.14);
+    --danger-text: #fca5a5;
+    --danger-border: rgba(248, 113, 113, 0.34);
+    --warn-soft: rgba(251, 191, 36, 0.14);
+    --warn-text: #fbbf24;
+    --warn-border: rgba(251, 191, 36, 0.34);
+    --checker: #26334b;
+    --bg-halo: #14213a;
+    --bg-halo-alt: #1a1b33;
+    --bg-grid: rgba(148, 163, 184, 0.07);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 14px 34px rgba(0, 0, 0, 0.42);
+    --shadow-raise: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 34px rgba(0, 0, 0, 0.48);
+  }
+
+  /* 深色下主按钮改为浅底深字，保证对比度 */
+  .btn--primary,
+  .btn--danger {
+    color: #0a1424;
+    box-shadow: none;
+  }
+
+  /* 右下角校徽角标保持浅底，徽标才看得清 */
+  .school-seal {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 24px rgba(0, 0, 0, 0.45);
+  }
+  /* 蓝色首屏上的白色按钮保持原样，否则会陷进蓝底 */
+  .hero .hero__cta,
+  .hero .hero__cta:hover:not(:disabled) {
+    background: #fff;
+    color: #1d4ed8;
+  }
+
+  /* 校徽底衬保持浅色，深色下依然像一枚徽章 */
+  .brand__mark--school,
+  .school-mark__emblem {
+    background: #f6f9ff;
+  }
+
+  /* 证件照底片与预览区保持浅底，避免影响照片判断 */
+  .photo-frame {
+    background: #e9eef7;
+  }
+
+  .match-stage,
+  .matte-stage.is-backdrop {
+    background-color: #e9eef7;
   }
 }

@@ -1,4 +1,4 @@
-import { AppFooter } from '../components/AppFooter'
+﻿import { AppFooter } from '../components/AppFooter'
 import { SCHOOL_EMBLEM_SRC } from '../components/SchoolBrand'
 import { ArrowLeftIcon, ShieldIcon } from '../components/icons'
 import { isStaticHosting } from '../lib/env'
@@ -53,7 +53,9 @@ const TECH = [
 ]
 
 const CHANGELOG = [
-  ['v1.3', '加入杭电校徽标识、关于页与首次访问声明'],
+  ['v1.5', '支持跟随系统的深色模式，补充源码与反馈入口'],
+  ['v1.4', '新增「关于本网站」与首次访问声明'],
+  ['v1.3', '加入杭电校徽标识，公网版标注不可用工具'],
   ['v1.2', 'GPA 计算器改为站内页面，接入学习通课程；上线公网版本'],
   ['v1.1', '新增图片压缩、校园网址，首页改版为轮播 + 工具排序'],
   ['v1.0', '卡证通与作业提醒上线'],
@@ -189,6 +191,54 @@ export function AboutPage() {
               </div>
             ))}
           </dl>
+        </section>
+
+        <section className="card about-card" aria-labelledby="about-links">
+          <h2 className="card__title" id="about-links">
+            源码与反馈
+          </h2>
+          <ul className="about-links">
+            <li>
+              <span className="about-links__key">源码仓库</span>
+              <a
+                className="about-links__val"
+                href="https://github.com/serKer86/AIGC-programe"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/serKer86/AIGC-programe
+              </a>
+            </li>
+            <li>
+              <span className="about-links__key">问题反馈</span>
+              <a
+                className="about-links__val"
+                href="https://github.com/serKer86/AIGC-programe/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                提交 Issue
+              </a>
+            </li>
+            <li>
+              <span className="about-links__key">当前版本</span>
+              <span className="about-links__val">v1.5</span>
+            </li>
+            <li>
+              <span className="about-links__key">公网站点</span>
+              <a
+                className="about-links__val"
+                href="https://serker86.github.io/AIGC-programe/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                serker86.github.io/AIGC-programe
+              </a>
+            </li>
+          </ul>
+          <p className="card__desc">
+            发现 bug、规格算错或想加新工具，都欢迎直接开 Issue；本机数据不会随反馈一起上传。
+          </p>
         </section>
 
         <section className="card about-card" aria-labelledby="about-log">
