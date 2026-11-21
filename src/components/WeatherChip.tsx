@@ -1,14 +1,21 @@
-﻿import { useEffect, useState } from 'react'
+﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import {
+  WEATHER_PLACES,
+  WEATHER_REFRESH_MS,
   describeWeather,
   fetchWeather,
-  readWeatherCache,
-  type WeatherNow,
+  findPlace,
+  isFresh,
+  readPlaceId,
+  readWeatherStore,
+  savePlaceId,
+  saveWeatherEntry,
+  type WeatherIconName,
+  type WeatherPlaceId,
+  type WeatherStore,
 } from '../lib/weather'
 
-type IconName = ReturnType<typeof describeWeather>['icon']
-
-function WeatherIcon({ name }: { name: IconName }) {
+function WeatherIcon({ name, className }: { name: WeatherIconName; className?: string }) {
   const common = {
     viewBox: '0 0 24 24',
     fill: 'none',
@@ -17,7 +24,7 @@ function WeatherIcon({ name }: { name: IconName }) {
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
     'aria-hidden': true,
-    className: 'weather-chip__icon',
+    className,
   }
 
   if (name === 'sun') {
@@ -82,56 +89,192 @@ function WeatherIcon({ name }: { name: IconName }) {
   )
 }
 
+function formatTime(at: number): string {
+  const date = new Date(at)
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+}
+
 export function WeatherChip() {
-  const [cache] = useState(() => readWeatherCache())
-  const [data, setData] = useState<WeatherNow | null>(cache.data)
+  const [store, setStore] = useState<WeatherStore>(readWeatherStore)
+  const [placeId, setPlaceId] = useState<WeatherPlaceId>(readPlaceId)
+  const [open, setOpen] = useState(false)
+  const [pending, setPending] = useState(false)
   const [failed, setFailed] = useState(false)
 
-  useEffect(() => {
-    // 缓存还新鲜就直接用，只有在过期或没有数据时才打接口
-    if (cache.fresh) return
+  const chipRef = useRef<HTMLButtonElement>(null)
+  const popRef = useRef<HTMLDivElement>(null)
 
-    const controller = new AbortController()
-    let alive = true
-    fetchWeather(controller.signal)
-      .then((next) => {
-        if (!alive) return
-        setData(next)
+  const place = findPlace(placeId)
+  const entry = store[placeId]
+  const data = entry?.data ?? null
+
+  const load = useCallback(
+    async (id: WeatherPlaceId, force: boolean, showPending = false) => {
+      if (!force && isFresh(readWeatherStore()[id])) return
+      if (showPending) setPending(true)
+      try {
+        const next = await fetchWeather(findPlace(id))
+        setStore(saveWeatherEntry(id, next))
         setFailed(false)
-      })
-      .catch(() => {
-        // 拿不到就安静地不显示，不留半截错误提示在首屏
-        if (alive) setFailed(true)
-      })
+      } catch {
+        setFailed(true)
+      } finally {
+        if (showPending) setPending(false)
+      }
+    },
+    [],
+  )
 
-    return () => {
-      alive = false
-      controller.abort()
+  useEffect(() => {
+    // 首次进入 / 切换校区：缓存过期才发请求；state 只在 await 之后写入
+    // oxlint-disable-next-line react/set-state-in-effect
+    void load(placeId, false)
+  }, [placeId, load])
+
+  // 页面长期开着时，每 30 分钟静默刷新一次
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      void load(placeId, true)
+    }, WEATHER_REFRESH_MS)
+    return () => window.clearInterval(timer)
+  }, [placeId, load])
+
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null
+      if (!target) return
+      if (popRef.current?.contains(target) || chipRef.current?.contains(target)) return
+      setOpen(false)
     }
-  }, [cache.fresh])
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
 
   if (!data && failed) return null
 
   const view = data ? describeWeather(data.code) : null
-  const label = data
-    ? `杭州今天${view?.label ?? ''}，${Math.round(data.temp)} 度，最高 ${Math.round(data.high)} 度，最低 ${Math.round(data.low)} 度，体感 ${Math.round(data.feels)} 度`
-    : '正在获取杭州天气'
+  const tomorrowView = data?.tomorrow ? describeWeather(data.tomorrow.code) : null
+  const summary = data
+    ? `${place.label}今天${view?.label ?? ''}，${Math.round(data.temp)} 度，最高 ${Math.round(data.high)} 度，最低 ${Math.round(data.low)} 度`
+    : `正在获取${place.label}天气`
+
+  const choosePlace = (id: WeatherPlaceId) => {
+    setPlaceId(id)
+    savePlaceId(id)
+  }
 
   return (
-    <span
-      className="weather-chip"
-      role="status"
-      aria-label={label}
-      title={
-        data
-          ? `今日 ${Math.round(data.low)}° ~ ${Math.round(data.high)}° · 体感 ${Math.round(data.feels)}° · 湿度 ${Math.round(data.humidity)}%`
-          : '正在获取杭州天气'
-      }
-    >
-      {view ? <WeatherIcon name={view.icon} /> : <span className="weather-chip__dot" aria-hidden="true" />}
-      <span className="weather-chip__city">杭州</span>
-      <b className="weather-chip__temp">{data ? `${Math.round(data.temp)}°` : '--°'}</b>
-      {view && <span className="weather-chip__desc">{view.label}</span>}
-    </span>
+    <>
+      <button
+        type="button"
+        ref={chipRef}
+        className="weather-chip"
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-label={summary}
+        title={
+          data
+            ? `${place.label} · 今日 ${Math.round(data.low)}° ~ ${Math.round(data.high)}° · 体感 ${Math.round(data.feels)}°`
+            : `正在获取${place.label}天气`
+        }
+        onClick={() => setOpen((value) => !value)}
+      >
+        {view ? (
+          <WeatherIcon name={view.icon} className="weather-chip__icon" />
+        ) : (
+          <span className="weather-chip__dot" aria-hidden="true" />
+        )}
+        <span className="weather-chip__city">{place.short}</span>
+        <b className="weather-chip__temp">{data ? `${Math.round(data.temp)}°` : '--°'}</b>
+        {view && <span className="weather-chip__desc">{view.label}</span>}
+        {data && (
+          <span className="weather-chip__range">
+            {Math.round(data.low)}°/{Math.round(data.high)}°
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <div className="weather-pop" role="dialog" aria-label="天气详情" ref={popRef}>
+          <div className="weather-pop__places" role="group" aria-label="选择校区">
+            {WEATHER_PLACES.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`weather-place${item.id === placeId ? ' is-active' : ''}`}
+                aria-pressed={item.id === placeId}
+                onClick={() => choosePlace(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {data && view ? (
+            <>
+              <div className="weather-pop__now">
+                <WeatherIcon name={view.icon} className="weather-pop__icon" />
+                <span className="weather-pop__temp">{Math.round(data.temp)}°</span>
+                <span className="weather-pop__desc">{view.label}</span>
+              </div>
+
+              <dl className="weather-pop__facts">
+                <div>
+                  <dt>今日</dt>
+                  <dd>
+                    {Math.round(data.low)}° ~ {Math.round(data.high)}°
+                  </dd>
+                </div>
+                <div>
+                  <dt>体感</dt>
+                  <dd>{Math.round(data.feels)}°</dd>
+                </div>
+                <div>
+                  <dt>湿度</dt>
+                  <dd>{Math.round(data.humidity)}%</dd>
+                </div>
+                <div>
+                  <dt>风速</dt>
+                  <dd>{Math.round(data.wind)} km/h</dd>
+                </div>
+              </dl>
+
+              {data.tomorrow && tomorrowView && (
+                <div className="weather-pop__tomorrow">
+                  <span className="weather-pop__tomorrow-label">明天</span>
+                  <WeatherIcon name={tomorrowView.icon} className="weather-pop__tomorrow-icon" />
+                  <span>{tomorrowView.label}</span>
+                  <b>
+                    {Math.round(data.tomorrow.low)}° / {Math.round(data.tomorrow.high)}°
+                  </b>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="weather-pop__empty">正在获取{place.label}的天气…</p>
+          )}
+
+          <div className="weather-pop__foot">
+            <span>{data ? `更新于 ${formatTime(entry?.savedAt ?? data.at)}` : '尚未获取'}</span>
+            <button
+              type="button"
+              className="weather-pop__refresh"
+              onClick={() => void load(placeId, true, true)}
+              disabled={pending}
+            >
+              {pending ? '刷新中…' : '刷新'}
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

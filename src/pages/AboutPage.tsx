@@ -50,7 +50,7 @@ const TECH = [
   ['抠图', 'MediaPipe Tasks Vision，模型与 wasm 随站点分发，全程本地推理'],
   ['后端', 'FastAPI + uvicorn，只监听 127.0.0.1:8000，不对局域网开放'],
   ['存储', '成绩与链接用 localStorage；学习通凭证用 Fernet 加密后存本机文件'],
-  ['天气', 'Open-Meteo 免密钥接口，按固定坐标取杭州实时天气，本机缓存 15 分钟'],
+  ['天气', 'Open-Meteo 免密钥接口，取杭州下沙 / 绍兴两个校区的实时天气，本机缓存 15 分钟'],
   ['部署', 'GitHub Pages 静态托管 + GitHub Actions 自动构建'],
 ]
 
@@ -143,7 +143,7 @@ export function AboutPage() {
             </li>
             <li>作业数据、成绩、自定义网址只保存在本机浏览器存储中，换设备不会同步。</li>
             <li>
-              首页天气由 Open-Meteo（api.open-meteo.com）提供：请求只带杭州的固定坐标和日期，
+              首页天气由 Open-Meteo（api.open-meteo.com）提供：请求只带下沙 / 绍兴两个校区的固定坐标和日期，
               不含任何个人标识，也不需要定位权限；结果在本机缓存 15 分钟。
             </li>
             <li>除此之外没有埋点、没有统计脚本，不追踪浏览行为。</li>
