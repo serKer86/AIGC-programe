@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+﻿import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { HomePage } from './pages/HomePage'
 import { HomeworkPage } from './pages/Homework'
 import { KazhengtongPage } from './pages/KazhengtongPage'
@@ -6,7 +6,7 @@ import { CompressPage } from './pages/CompressPage'
 import { LinksPage } from './pages/LinksPage'
 import { GpaPage } from './pages/GpaPage'
 import { AboutPage } from './pages/AboutPage'
-import { CornerSeal } from './components/SchoolBrand'
+import { AboutCornerButton } from './components/SchoolBrand'
 import { DisclaimerGate } from './components/DisclaimerGate'
 import { recordToolOpen, toolIdForRoute } from './lib/usage'
 
@@ -61,7 +61,7 @@ export default function App() {
   return (
     <>
       {renderRoute(route)}
-      <CornerSeal />
+      <AboutCornerButton />
       <DisclaimerGate />
     </>
   )

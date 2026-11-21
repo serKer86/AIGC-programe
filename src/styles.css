@@ -3769,47 +3769,60 @@ select.field__input {
   letter-spacing: 0.04em;
 }
 
-.school-seal {
+/* 右下角「关于本网站」入口 */
+.corner-about {
   display: none;
 }
 
 @media (min-width: 1024px) {
-  .school-seal {
+  .corner-about {
     position: fixed;
     right: 20px;
     bottom: 20px;
     z-index: 40;
-    display: grid;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
     background: var(--surface-glass-2);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
-      0 8px 22px rgba(15, 23, 42, 0.08);
-    backdrop-filter: blur(6px);
-    opacity: 0.72;
-    transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+      0 10px 24px rgba(15, 23, 42, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: color 160ms ease, opacity 160ms ease, transform 160ms ease,
+      box-shadow 160ms ease, border-color 160ms ease;
   }
 
-  .school-seal:hover,
-  .school-seal:focus-visible {
+  .corner-about:hover,
+  .corner-about:focus-visible {
     opacity: 1;
     transform: translateY(-1px);
+    color: var(--primary);
+    border-color: rgba(37, 99, 235, 0.28);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05),
-      0 12px 28px rgba(15, 23, 42, 0.14);
+      0 14px 30px rgba(15, 23, 42, 0.16);
   }
 
-  .school-seal__img {
+  .corner-about__emblem {
     display: block;
-    width: 34px;
-    height: 34px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
+  }
+
+  .corner-about__text {
+    line-height: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .school-seal {
+  .corner-about {
     transition: none;
   }
 }
@@ -4134,84 +4147,4 @@ a.about-links__val {
 
 a.about-links__val:hover {
   text-decoration: underline;
-}
-/* ================= 深色模式 ================= */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --bg: #0b1220;
-    --surface: #131c2b;
-    --surface-soft: #182234;
-    --surface-mute: #1e2a3d;
-    --field-bg: #101a2a;
-    --surface-glass: rgba(19, 28, 43, 0.94);
-    --surface-glass-2: rgba(19, 28, 43, 0.86);
-    --text: #e8eefb;
-    --text-secondary: #a9b7cc;
-    --text-soft: #bcc9dc;
-    --muted: #7f92ac;
-    --border: #26334b;
-    --primary: #6aa8ff;
-    --primary-strong: #9cc4ff;
-    --primary-soft: rgba(106, 168, 255, 0.16);
-    --success: #34d399;
-    --success-soft: rgba(52, 211, 153, 0.14);
-    --success-text: #6ee7b7;
-    --success-border: rgba(52, 211, 153, 0.32);
-    --danger: #f87171;
-    --danger-soft: rgba(248, 113, 113, 0.14);
-    --danger-text: #fca5a5;
-    --danger-border: rgba(248, 113, 113, 0.34);
-    --warn-soft: rgba(251, 191, 36, 0.14);
-    --warn-text: #fbbf24;
-    --warn-border: rgba(251, 191, 36, 0.34);
-    --checker: #26334b;
-    --bg-halo: #14213a;
-    --bg-halo-alt: #1a1b33;
-    --bg-grid: rgba(148, 163, 184, 0.07);
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 14px 34px rgba(0, 0, 0, 0.42);
-    --shadow-raise: inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 34px rgba(0, 0, 0, 0.48);
-  }
-
-  /* 深色下主按钮改为浅底深字，保证对比度 */
-  .btn--primary,
-  .btn--danger {
-    color: #0a1424;
-    box-shadow: none;
-  }
-
-  /* 右下角校徽角标保持浅底，徽标才看得清 */
-  .school-seal {
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 24px rgba(0, 0, 0, 0.45);
-  }
-  /* 蓝色首屏上的白色按钮保持原样，否则会陷进蓝底 */
-  .hero .hero__cta,
-  .hero .hero__cta:hover:not(:disabled) {
-    background: #fff;
-    color: #1d4ed8;
-  }
-
-  /* 校徽底衬保持浅色，深色下依然像一枚徽章 */
-  .brand__mark--school,
-  .school-mark__emblem {
-    background: #f6f9ff;
-  }
-
-  /* 证件照底片与预览区保持浅底，避免影响照片判断 */
-  .photo-frame {
-    background: #e9eef7;
-  }
-
-  .match-stage,
-  .matte-stage.is-backdrop {
-    background-color: #e9eef7;
-  }
-}
-.about-legal__replay {
-  margin-top: 12px;
-  min-height: 38px;
-  font-size: 13px;
 }
