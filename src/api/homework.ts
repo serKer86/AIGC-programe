@@ -64,6 +64,7 @@ export const ALL_COURSES_SOURCE = 'all://courses'
 
 const REQUEST_TIMEOUT_MS = 15_000
 const FETCH_ALL_TIMEOUT_MS = 120_000
+const COURSES_TIMEOUT_MS = 60_000
 
 export class ApiTimeoutError extends Error {
   constructor() {
@@ -212,6 +213,52 @@ export async function fetchAllHomework(
   }
 
   return readJson<FetchAllHomeworkResult>(response)
+}
+
+export type CoursesErrorCode =
+  | 'SESSION_EXPIRED'
+  | 'PARSE_EMPTY'
+  | 'NETWORK_ERROR'
+
+export interface ChaoxingCourse {
+  name: string
+  credit: number | null
+}
+
+export interface ChaoxingCoursesResult {
+  ok: boolean
+  code?: CoursesErrorCode
+  message?: string
+  courses?: ChaoxingCourse[]
+  fetchedAt?: string
+}
+
+export async function fetchChaoxingCourses(
+  signal?: AbortSignal,
+): Promise<ChaoxingCoursesResult> {
+  const response = await request(
+    '/api/chaoxing/courses',
+    { cache: 'no-store' },
+    signal,
+    COURSES_TIMEOUT_MS,
+  )
+  if (!response.ok) {
+    throw new Error(`本地后端返回 ${response.status}`)
+  }
+
+  const data = await readJson<ChaoxingCoursesResult>(response)
+  return {
+    ...data,
+    courses: Array.isArray(data.courses)
+      ? data.courses.filter(
+          (item): item is ChaoxingCourse =>
+            typeof item === 'object' &&
+            item !== null &&
+            typeof (item as ChaoxingCourse).name === 'string' &&
+            (item as ChaoxingCourse).name.trim().length > 0,
+        )
+      : [],
+  }
 }
 
 export async function fetchLastHomework(

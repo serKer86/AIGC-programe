@@ -7,6 +7,7 @@ const ROUTE_TO_TOOL: Record<string, string> = {
   '/homework': 'homework',
   '/compress': 'compress',
   '/links': 'links',
+  '/gpa': 'gpa-calc',
 }
 
 export function toolIdForRoute(route: string): string | undefined {

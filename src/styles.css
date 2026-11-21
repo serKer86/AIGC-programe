@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   color-scheme: light;
   --bg: #f4f6fb;
   --surface: #ffffff;
@@ -3342,3 +3342,386 @@ select.field__input {
   }
 }
 
+
+/* ================= GPA 计算器 ================= */
+
+.app--gpa {
+  --tool-hue: 268;
+}
+
+.app--gpa .app-main {
+  display: grid;
+  gap: 18px;
+}
+
+.gpa-feedback {
+  min-width: 0;
+}
+
+.gpa-summary {
+  display: grid;
+  gap: 18px;
+}
+
+.gpa-summary__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+  letter-spacing: 0.02em;
+}
+
+.gpa-summary__value {
+  margin: 6px 0 4px;
+  font-size: clamp(40px, 10vw, 56px);
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gpa-summary__hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.gpa-summary__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gpa-summary__facts li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+}
+
+.gpa-summary__facts span {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.gpa-summary__facts strong {
+  font-size: 16px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.gpa-list__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.gpa-head {
+  display: none;
+}
+
+.gpa-rows {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gpa-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'name point'
+    'credit mode'
+    'score side';
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #fbfcff;
+}
+
+.gpa-row__name {
+  grid-area: name;
+}
+
+.gpa-row__credit {
+  grid-area: credit;
+}
+
+.gpa-row__mode {
+  grid-area: mode;
+}
+
+.gpa-row__score {
+  grid-area: score;
+}
+
+.gpa-row__side {
+  grid-area: side;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.gpa-row__point {
+  grid-area: point;
+  justify-self: end;
+  align-self: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gpa-row__point.is-empty {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.gpa-row__retake {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-soft);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.gpa-row__retake input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.gpa-row__remove {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 10px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.gpa-row__remove svg {
+  width: 15px;
+  height: 15px;
+}
+
+.gpa-row__remove:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.gpa-empty {
+  padding: 20px 6px 10px;
+  text-align: center;
+}
+
+.gpa-empty__title {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+.gpa-add__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.gpa-add__form .btn {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
+.gpa-rules__grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.gpa-rules__block h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.gpa-rules__block ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gpa-rules__block li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f8faff;
+  font-size: 14px;
+}
+
+.gpa-rules__block b {
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 640px) {
+  .gpa-add__form {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  }
+
+  .gpa-add__form .btn {
+    grid-column: auto;
+  }
+
+  .gpa-rules__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .app--gpa {
+    max-width: 1120px;
+  }
+
+  .app--gpa .app-main {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .gpa-summary,
+  .gpa-feedback {
+    grid-column: 1 / -1;
+  }
+
+  .gpa-list {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .gpa-side {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    align-self: start;
+    position: sticky;
+    top: 18px;
+  }
+
+  .gpa-cell__label {
+    display: none;
+  }
+
+  .gpa-head,
+  .gpa-row {
+    grid-template-columns:
+      minmax(0, 1.7fr) 82px 128px minmax(0, 1fr) 58px 88px;
+  }
+
+  .gpa-head {
+    display: grid;
+    gap: 8px;
+    padding: 0 12px 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .gpa-head span:nth-child(5) {
+    text-align: right;
+  }
+
+  .gpa-row {
+    grid-template-areas: none;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  .gpa-row > * {
+    grid-area: auto;
+  }
+
+  .gpa-row__point {
+    justify-self: end;
+  }
+
+  .gpa-row__side {
+    justify-content: space-between;
+  }
+}
+
+.gpa-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 13px;
+}
+
+.gpa-hint svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.gpa-cell {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.gpa-cell__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.gpa-cell .field__input {
+  width: 100%;
+  min-width: 0;
+}
+
+.gpa-side {
+  display: grid;
+  gap: 18px;
+}
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.notice svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-top: 2px;
+}

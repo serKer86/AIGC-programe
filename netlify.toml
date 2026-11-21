@@ -7,8 +7,9 @@
 
 [[redirects]]
   from = "/gpa-hdu.html"
-  to = "/gpa-hdu.html"
-  status = 200
+  to = "/gpa"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/*"

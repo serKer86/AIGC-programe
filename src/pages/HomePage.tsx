@@ -120,8 +120,8 @@ const TOOLS: ToolEntry[] = [
   {
     id: 'gpa-calc',
     name: '杭电GPA计算器',
-    path: '/gpa-hdu.html',
-    description: '杭电5分制绩点计算，支持补考成绩',
+    path: '#/gpa',
+    description: '学习通课程一键带入，按 5 分制换算绩点，成绩只存本机',
     tags: ['成绩'],
     keywords: [
       'gpa',

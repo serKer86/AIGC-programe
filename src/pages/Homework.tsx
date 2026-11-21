@@ -11,6 +11,7 @@ import {
   fetchLastHomework,
   unbindChaoxing,
 } from '../api/homework'
+import { isStaticHosting } from '../lib/env'
 import type {
   BindErrorCode,
   FailedCourse,
@@ -513,6 +514,16 @@ export function HomeworkPage() {
       </header>
 
       <main className="app-main">
+        {isStaticHosting() && (
+          <p className="notice" role="note">
+            <AlertIcon />
+            <span>
+              当前是公网版本，读不到你电脑上的本地后端（127.0.0.1:8000），所以作业提醒在这里不可用。
+              需要本机双击 start-dev.cmd 打开才能汇总作业。
+            </span>
+          </p>
+        )}
+
         <section className="card homework-connection" aria-labelledby="connection-title">
           <div className="card__head">
             <h2 className="card__title" id="connection-title">

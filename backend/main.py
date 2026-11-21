@@ -41,6 +41,11 @@ def chaoxing_status() -> dict[str, bool]:
     return {"bound": chaoxing.has_valid_credentials()}
 
 
+@app.get("/api/chaoxing/courses")
+def chaoxing_courses() -> dict:
+    return chaoxing.fetch_courses()
+
+
 @app.post("/api/chaoxing/unbind")
 def unbind_chaoxing() -> dict[str, bool]:
     return chaoxing.unbind_account()

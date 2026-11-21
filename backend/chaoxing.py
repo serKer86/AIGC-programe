@@ -544,6 +544,124 @@ def course_display_name(course_url: str, course_name: str = "") -> str:
     return f"课程 {course_id}" if course_id else "未知课程"
 
 
+CREDIT_PATTERN = re.compile(r"([0-9]+(?:\.[0-9]+)?)\s*学分")
+
+
+def parse_course_entries(
+    soup: BeautifulSoup, base_url: str
+) -> list[dict[str, object]]:
+    """从课程列表页提取课程名；能识别到「x 学分」就一并带上。
+
+    课程列表里同一门课通常有两个链接（图标 + 标题），按 courseid/clazzid 去重，
+    并优先保留有标题文字的那一条。
+    """
+    picked: dict[str, dict[str, object]] = {}
+
+    for anchor in soup.find_all("a", href=True):
+        href = str(anchor.get("href") or "").strip()
+        if "stucoursemiddle" not in href:
+            continue
+
+        absolute = urljoin(base_url, href)
+        parsed = urlparse(absolute)
+        if parsed.scheme not in ("http", "https"):
+            continue
+        if not is_allowed_host(parsed.hostname or ""):
+            continue
+
+        query = parse_qs(parsed.query)
+        course_id = (query.get("courseid") or query.get("courseId") or [""])[0]
+        class_id = (query.get("clazzid") or query.get("classId") or [""])[0]
+        key = f"{course_id}:{class_id}" if course_id and class_id else absolute
+
+        raw_name = clean_text(anchor.get_text(" ", strip=True))
+        existing = picked.get(key)
+        # 已经拿到带标题的那条就不再覆盖；只有标题缺失时才用后出现的补上
+        if existing is not None and existing["named"]:
+            continue
+
+        block_text = raw_name
+        node = anchor
+        for _ in range(3):
+            node = node.parent if node is not None else None
+            if node is None:
+                break
+            text = clean_text(node.get_text(" ", strip=True))
+            if len(text) > len(block_text):
+                block_text = text
+
+        name = raw_name or course_display_name(absolute)
+        credit: float | None = None
+        match = CREDIT_PATTERN.search(block_text)
+        if match:
+            try:
+                value = float(match.group(1))
+            except ValueError:
+                value = 0.0
+            if 0 < value <= 30:
+                credit = value
+
+        picked[key] = {
+            "name": name,
+            "credit": credit,
+            "url": absolute,
+            "named": bool(raw_name),
+        }
+
+    return [
+        {"name": item["name"], "credit": item["credit"], "url": item["url"]}
+        for item in picked.values()
+    ]
+
+
+def fetch_courses() -> dict:
+    """只读课程列表（不逐门进课程页），供 GPA 计算器预填课程名。"""
+    try:
+        cookies = load_cookies()
+    except SessionExpired:
+        return {"ok": False, "code": "SESSION_EXPIRED"}
+
+    try:
+        response = fetch_work_page(COURSE_LIST_URL, cookies)
+    except SessionExpired:
+        return {"ok": False, "code": "SESSION_EXPIRED"}
+    except FetchNetworkError as error:
+        return {"ok": False, "code": "NETWORK_ERROR", "message": str(error)}
+
+    final = urlparse(response.url or COURSE_LIST_URL)
+    logger.info(
+        "course entries host=%s path=%s status=%s",
+        final.hostname,
+        final.path,
+        response.status_code,
+    )
+    if response.status_code >= 400:
+        location = f"{final.hostname or ''}{final.path or ''}"
+        return {
+            "ok": False,
+            "code": "NETWORK_ERROR",
+            "message": f"学习通返回 HTTP {response.status_code}（{location}）",
+        }
+
+    soup = BeautifulSoup(response_html(response), "html.parser")
+    if looks_like_login_page(soup):
+        return {"ok": False, "code": "SESSION_EXPIRED"}
+
+    entries = parse_course_entries(soup, response.url or COURSE_LIST_URL)
+    if not entries:
+        return {
+            "ok": False,
+            "code": "PARSE_EMPTY",
+            "message": "未找到课程，请确认学习通账号中已有课程",
+        }
+
+    return {
+        "ok": True,
+        "courses": entries,
+        "fetchedAt": datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def fetch_course_homework(
     course_url: str, cookies: list[dict[str, str]]
 ) -> tuple[str, list[dict[str, str]]]:
