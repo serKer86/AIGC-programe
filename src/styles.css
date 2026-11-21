@@ -617,8 +617,9 @@ a.tool-card:focus-visible {
 
 .tool-card__row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 4px 8px;
 }
 
 .tool-card__name {
