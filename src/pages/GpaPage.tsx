@@ -365,8 +365,9 @@ export function GpaPage() {
             <div className="gpa-empty">
               <p className="gpa-empty__title">还没有课程</p>
               <p className="card__desc">
-                点上面的「从学习通同步」，把本学期课程一键带进来，你只需要填分数；
-                也可以直接在下面手动添加。
+                {isLocalHost()
+                  ? '点上面的「从学习通同步」，把本学期课程一键带进来，你只需要填分数；也可以直接在下面手动添加。'
+                  : '公网版本用「添加课程」手动录入即可，成绩和 GPA 都在你自己的浏览器里计算。'}
               </p>
             </div>
           ) : (
