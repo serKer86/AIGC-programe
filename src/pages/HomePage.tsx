@@ -2,6 +2,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { AppFooter } from '../components/AppFooter'
 import { HeroCarousel, type HeroSlide } from '../components/HeroCarousel'
+import { WeatherChip } from '../components/WeatherChip'
 import {
   ArrowRightIcon,
   ClipboardIcon,
@@ -321,7 +322,12 @@ export function HomePage() {
       </header>
 
       <main className="app-main">
-        {!keyword && <HeroCarousel slides={slides} />}
+        {!keyword && (
+          <div className="hero-weather">
+            <HeroCarousel slides={slides} />
+            <WeatherChip />
+          </div>
+        )}
 
         {hasFrequent && (
           <aside className="usage-panel" aria-labelledby="usage-title">

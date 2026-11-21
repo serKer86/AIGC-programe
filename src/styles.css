@@ -4270,3 +4270,82 @@ a.about-links__val:hover {
   width: 13px;
   height: 13px;
 }
+/* ---------- 首屏天气 ---------- */
+
+.hero-weather {
+  position: relative;
+}
+
+.weather-chip {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+  user-select: none;
+  cursor: default;
+}
+
+.weather-chip__icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.weather-chip__city {
+  font-weight: 500;
+  opacity: 0.82;
+}
+
+.weather-chip__temp {
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-chip__desc {
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.weather-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 639px) {
+  .hero-weather {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .weather-chip {
+    position: static;
+    order: -1;
+    align-self: flex-end;
+    border-color: var(--border);
+    background: var(--field-bg);
+    color: var(--text-secondary);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    backdrop-filter: none;
+  }
+
+  .weather-chip__dot {
+    background: var(--muted);
+  }
+}
