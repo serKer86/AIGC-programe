@@ -54,6 +54,7 @@ const TECH = [
 ]
 
 const CHANGELOG = [
+  ['v1.7', '校园网址支持进入管理模式后拖动排序'],
   ['v1.6', '视觉细节统一：字号层级、圆角、空状态、禁用态与图标'],
   ['v1.5', '补充源码与反馈入口'],
   ['v1.4', '新增「关于本网站」与首次访问声明'],
@@ -238,7 +239,7 @@ export function AboutPage() {
             </li>
             <li>
               <span className="about-links__key">当前版本</span>
-              <span className="about-links__val">v1.6</span>
+              <span className="about-links__val">v1.7</span>
             </li>
             <li>
               <span className="about-links__key">公网站点</span>

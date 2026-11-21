@@ -105,8 +105,7 @@ export function removeLocalLink(id: string, current: SchoolLink[]): boolean {
   return writeLocalLinks(current.filter((link) => link.id !== id))
 }
 
-export function groupLinks(links: SchoolLink[]): { group: string; links: SchoolLink[] }[] {
-  const groups: { group: string; links: SchoolLink[] }[] = []
+export function groupLinks(links: SchoolLink[]): { group: string; links: SchoolLink[] }[] {  const groups: { group: string; links: SchoolLink[] }[] = []
   for (const link of links) {
     const name = link.group.trim() || DEFAULT_GROUP
     const found = groups.find((entry) => entry.group === name)
@@ -122,4 +121,50 @@ export function describeHost(url: string): string {
   } catch {
     return url
   }
+}
+/* ---------- 图标排序 ---------- */
+
+const ORDER_STORAGE_KEY = 'toolbox.linkOrder.v1'
+
+export function readLinkOrder(): string[] {
+  try {
+    const raw = localStorage.getItem(ORDER_STORAGE_KEY)
+    if (!raw) return []
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return []
+    const ids: string[] = []
+    for (const value of parsed) {
+      if (typeof value === 'string' && value && !ids.includes(value)) ids.push(value)
+    }
+    return ids
+  } catch {
+    return []
+  }
+}
+
+export function saveLinkOrder(ids: string[]): boolean {
+  try {
+    localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(ids))
+    return true
+  } catch {
+    return false
+  }
+}
+
+/** 按保存的顺序排列；新加的链接自动落到末尾 */
+export function applyLinkOrder(links: SchoolLink[], order: string[]): SchoolLink[] {
+  if (!order.length) return links
+  const byId = new Map(links.map((link) => [link.id, link] as const))
+  const placed = new Set<string>()
+  const sorted: SchoolLink[] = []
+  for (const id of order) {
+    const link = byId.get(id)
+    if (!link || placed.has(id)) continue
+    sorted.push(link)
+    placed.add(id)
+  }
+  for (const link of links) {
+    if (!placed.has(link.id)) sorted.push(link)
+  }
+  return sorted
 }

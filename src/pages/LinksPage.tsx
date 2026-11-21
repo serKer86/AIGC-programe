@@ -12,10 +12,12 @@ import {
   AlertIcon,
   ArrowLeftIcon,
   CloseIcon,
+  GripIcon,
   LinkIcon,
   RefreshIcon,
   ShieldIcon,
 } from '../components/icons'
+import { useDragSort } from '../hooks/useDragSort'
 import {
   clearLinkIcon,
   createIconDataUrl,
@@ -30,10 +32,13 @@ import {
   DEFAULT_GROUP,
   PRESET_LINKS,
   addLocalLink,
+  applyLinkOrder,
   describeHost,
   groupLinks,
+  readLinkOrder,
   readLocalLinks,
   removeLocalLink,
+  saveLinkOrder,
   saveLocalLink,
   type SchoolLink,
 } from '../lib/schoolLinks'
@@ -75,7 +80,18 @@ export function LinksPage() {
   const iconTargetRef = useRef<string | null>(null)
 
   const allLinks = useMemo<SchoolLink[]>(() => [...PRESET_LINKS, ...localLinks], [localLinks])
-  const groups = useMemo(() => groupLinks(allLinks), [allLinks])
+  const [order, setOrder] = useState<string[]>(readLinkOrder)
+  const orderedLinks = useMemo(() => applyLinkOrder(allLinks, order), [allLinks, order])
+  const groups = useMemo(() => groupLinks(orderedLinks), [orderedLinks])
+  const dragIds = useMemo(() => orderedLinks.map((link) => link.id), [orderedLinks])
+
+  // 和首页工具卡片一致：进入「管理」后可以直接拖动图标排序
+  const { isDragging, getItemProps } = useDragSort(dragIds, {
+    enabled: managing,
+    activation: 'direct',
+    onReorder: setOrder,
+    onCommit: saveLinkOrder,
+  })
   const pendingLink = pendingDelete
     ? allLinks.find((link) => link.id === pendingDelete) ?? null
     : null
@@ -218,7 +234,11 @@ export function LinksPage() {
                     <span className="links-group__count">{group.links.length}</span>
                   </h3>
                 )}
-                <div className="link-grid">
+                <div
+                  className={`link-grid${managing ? ' is-managing' : ''}${
+                    isDragging ? ' is-sorting' : ''
+                  }`}
+                >
                   {group.links.map((link) => {
                     const src = iconSrcFor(link, icons)
                     const hueStyle = { '--link-hue': tileHue(link.url) } as CSSProperties
@@ -237,8 +257,23 @@ export function LinksPage() {
                         )}
                       </>
                     )
+                    const drag = getItemProps(link.id)
                     return (
-                      <div className={`link-tile${managing ? ' is-managing' : ''}`} key={link.id}>
+                      <div
+                        key={link.id}
+                        className={`link-tile${managing ? ' is-managing' : ''}${
+                          drag.draggingClassName
+                        }`}
+                        ref={drag.ref}
+                        onPointerDown={(event) => {
+                          // 图标操作按钮上的按下不算拖拽起点
+                          if ((event.target as HTMLElement).closest('button')) return
+                          drag.onPointerDown(event)
+                        }}
+                        onPointerMove={drag.onPointerMove}
+                        onPointerUp={drag.onPointerUp}
+                        onContextMenu={drag.onContextMenu}
+                      >
                         {managing ? (
                           <div className="link-tile__face">{face}</div>
                         ) : (
@@ -251,6 +286,11 @@ export function LinksPage() {
                           >
                             {face}
                           </a>
+                        )}
+                        {managing && (
+                          <span className="link-tile__grip" aria-hidden="true">
+                            <GripIcon />
+                          </span>
                         )}
                         {managing && (
                           <span className="link-tile__actions">
@@ -372,7 +412,7 @@ export function LinksPage() {
           </h2>
           <ul>
             <li>没有配图的入口按域名首字母生成图标，同一域名颜色固定</li>
-            <li>点「管理」可以给自己加的入口换图标或删除，自选图标只存这台设备</li>
+            <li>点「管理」可以拖动图标调整顺序，也可以换图标或删除；顺序和图标都只存这台设备</li>
             <li>链接在新标签打开，本页不会内嵌任何学校站点</li>
             <li>无痕模式下添加的链接和图标关闭页面即消失</li>
           </ul>

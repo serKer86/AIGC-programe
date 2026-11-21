@@ -4217,3 +4217,56 @@ a.about-links__val:hover {
   line-height: 1.65;
   color: var(--muted);
 }
+/* ---------- 校园网址：管理模式拖动排序 ---------- */
+
+.link-grid.is-managing {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.link-tile {
+  position: relative;
+}
+
+.link-tile.is-managing {
+  cursor: grab;
+  touch-action: none;
+}
+
+.link-tile.is-managing .link-tile__face:hover {
+  border-color: var(--border);
+  transform: none;
+}
+
+.link-tile.is-dragging {
+  z-index: 3;
+  cursor: grabbing;
+}
+
+.link-tile.is-dragging .link-tile__face {
+  border-color: #c7d8fb;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
+}
+
+.link-grid.is-sorting .link-tile__face {
+  transition: none;
+}
+
+.link-tile__grip {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--surface-glass);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.link-tile__grip svg {
+  width: 13px;
+  height: 13px;
+}
