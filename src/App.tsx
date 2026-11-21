@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { HomePage } from './pages/HomePage'
 import { HomeworkPage } from './pages/Homework'
 import { KazhengtongPage } from './pages/KazhengtongPage'
 import { CompressPage } from './pages/CompressPage'
 import { LinksPage } from './pages/LinksPage'
 import { GpaPage } from './pages/GpaPage'
+import { CornerSeal } from './components/SchoolBrand'
 import { recordToolOpen, toolIdForRoute } from './lib/usage'
 
 function readRoute(): string {
@@ -23,6 +24,15 @@ const TITLES: Record<string, string> = {
   '/links': '校园网址 · 常用入口直达',
   '/gpa': 'GPA 计算 · 杭电 5 分制',
   '/': '校园工具箱 · 证件照一次做对',
+}
+
+function renderRoute(route: string): ReactNode {
+  if (route === '/kazhengtong') return <KazhengtongPage />
+  if (route === '/homework') return <HomeworkPage />
+  if (route === '/compress') return <CompressPage />
+  if (route === '/links') return <LinksPage />
+  if (route === '/gpa') return <GpaPage />
+  return <HomePage />
 }
 
 export default function App() {
@@ -44,10 +54,10 @@ export default function App() {
     if (toolId) recordToolOpen(toolId)
   }, [route])
 
-  if (route === '/kazhengtong') return <KazhengtongPage />
-  if (route === '/homework') return <HomeworkPage />
-  if (route === '/compress') return <CompressPage />
-  if (route === '/links') return <LinksPage />
-  if (route === '/gpa') return <GpaPage />
-  return <HomePage />
+  return (
+    <>
+      {renderRoute(route)}
+      <CornerSeal />
+    </>
+  )
 }

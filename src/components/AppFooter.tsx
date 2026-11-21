@@ -1,4 +1,5 @@
 import { ShieldIcon } from './icons'
+import { SchoolMark } from './SchoolBrand'
 
 interface AppFooterProps {
   message?: string
@@ -9,8 +10,13 @@ export function AppFooter({
 }: AppFooterProps) {
   return (
     <footer className="app-footer">
-      <ShieldIcon />
-      <span>{message}</span>
+      <p className="app-footer__line">
+        <ShieldIcon />
+        <span>{message}</span>
+      </p>
+      <p className="app-footer__line app-footer__school">
+        <SchoolMark />
+      </p>
     </footer>
   )
 }

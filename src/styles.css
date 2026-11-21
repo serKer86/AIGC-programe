@@ -1936,15 +1936,22 @@ a.tool-card:focus-visible {
 /* ---------- Footer ---------- */
 
 .app-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  justify-items: center;
   gap: 6px;
   padding-top: 2px;
   font-size: 11.5px;
   line-height: 1.5;
   color: #94a3b8;
   text-align: center;
+}
+
+.app-footer__line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
 }
 
 .app-footer svg {
@@ -3536,9 +3543,13 @@ select.field__input {
 
 .gpa-add__form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 88px minmax(0, 1fr);
   gap: 10px;
   margin-bottom: 10px;
+}
+
+.gpa-add__form > .field__input:first-child {
+  grid-column: 1 / -1;
 }
 
 .gpa-add__form .btn {
@@ -3585,11 +3596,7 @@ select.field__input {
 
 @media (min-width: 640px) {
   .gpa-add__form {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
-  }
-
-  .gpa-add__form .btn {
-    grid-column: auto;
+    grid-template-columns: 88px minmax(0, 1fr);
   }
 
   .gpa-rules__grid {
@@ -3632,7 +3639,7 @@ select.field__input {
   .gpa-head,
   .gpa-row {
     grid-template-columns:
-      minmax(0, 1.7fr) 82px 128px minmax(0, 1fr) 58px 88px;
+      minmax(0, 2fr) 78px 122px minmax(0, 0.95fr) 54px 84px;
   }
 
   .gpa-head {
@@ -3724,4 +3731,71 @@ select.field__input {
   height: 16px;
   flex: none;
   margin-top: 2px;
+}
+/* ---------- 杭电校徽标识 ---------- */
+
+.school-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.school-mark__emblem {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.school-mark__text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9aa7bb;
+  letter-spacing: 0.04em;
+}
+
+.school-seal {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .school-seal {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
+      0 8px 22px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(6px);
+    opacity: 0.72;
+    transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .school-seal:hover,
+  .school-seal:focus-visible {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05),
+      0 12px 28px rgba(15, 23, 42, 0.14);
+  }
+
+  .school-seal__img {
+    display: block;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .school-seal {
+    transition: none;
+  }
 }
