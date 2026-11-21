@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+﻿import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { AppFooter } from '../components/AppFooter'
 import {
   AlertIcon,
   ArrowLeftIcon,
   CloseIcon,
-  GridIcon,
+  CalculatorIcon,
   PlusIcon,
   RefreshIcon,
   ShieldIcon,
@@ -273,7 +273,7 @@ export function GpaPage() {
       <header className="app-header">
         <div className="brand">
           <span className="brand__mark">
-            <GridIcon />
+            <CalculatorIcon />
           </span>
           <div>
             <h1 className="brand__title">杭电 GPA 计算器</h1>

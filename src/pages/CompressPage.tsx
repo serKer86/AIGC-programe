@@ -1,4 +1,4 @@
-import {
+﻿import {
   useCallback,
   useEffect,
   useRef,
@@ -11,7 +11,7 @@ import { AppFooter } from '../components/AppFooter'
 import {
   AlertIcon,
   ArrowLeftIcon,
-  CompressIcon,
+  ShrinkIcon,
   DownloadIcon,
   ShieldIcon,
   UploadIcon,
@@ -250,7 +250,7 @@ export function CompressPage() {
       <header className="app-header">
         <div className="brand">
           <span className="brand__mark">
-            <CompressIcon />
+            <ShrinkIcon />
           </span>
           <div>
             <h1 className="brand__title">图片压缩</h1>
@@ -397,9 +397,15 @@ export function CompressPage() {
           </div>
 
           {!items.length ? (
-            <p className="card__desc">
-              选好图片后点「开始压缩」。每张图片会从原始体积压到目标上限以内，压不到时在队列里标注。
-            </p>
+            <div className="empty-state">
+              <span className="empty-state__icon">
+                <UploadIcon />
+              </span>
+              <p className="empty-state__title">队列里还没有图片</p>
+              <p className="empty-state__text">
+                在左边选好图片后点「开始压缩」，每张图会从原始体积压到目标上限以内，压不到时会在队列里标出来。
+              </p>
+            </div>
           ) : (
             <>
               <ul className="compress-list">

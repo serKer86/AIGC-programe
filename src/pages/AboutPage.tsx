@@ -54,7 +54,8 @@ const TECH = [
 ]
 
 const CHANGELOG = [
-  ['v1.5', '支持跟随系统的深色模式，补充源码与反馈入口'],
+  ['v1.6', '视觉细节统一：字号层级、圆角、空状态、禁用态与图标'],
+  ['v1.5', '补充源码与反馈入口'],
   ['v1.4', '新增「关于本网站」与首次访问声明'],
   ['v1.3', '加入杭电校徽标识，公网版标注不可用工具'],
   ['v1.2', 'GPA 计算器改为站内页面，接入学习通课程；上线公网版本'],
@@ -83,7 +84,10 @@ export function AboutPage() {
           </span>
           <div>
             <h1 className="brand__title">关于本网站</h1>
-            <p className="brand__subtitle">作品说明、隐私与免责声明</p>
+            <p className="brand__subtitle">
+              作品说明、隐私与免责声明
+            </p>
+            <p className="brand__en">HANGZHOU DIANZI UNIVERSITY</p>
           </div>
         </div>
       </header>
@@ -234,7 +238,7 @@ export function AboutPage() {
             </li>
             <li>
               <span className="about-links__key">当前版本</span>
-              <span className="about-links__val">v1.5</span>
+              <span className="about-links__val">v1.6</span>
             </li>
             <li>
               <span className="about-links__key">公网站点</span>

@@ -1,4 +1,4 @@
-import {
+﻿import {
   useMemo,
   useRef,
   useState,
@@ -199,10 +199,16 @@ export function LinksPage() {
           </div>
 
           {!allLinks.length ? (
-            <p className="card__desc">
-              这里暂时是空的。把教务系统、图书馆、选课、网络认证这些天天要开的页面添加到下面，
-              下次就不用从浏览器书签里翻了。
-            </p>
+            <div className="empty-state">
+              <span className="empty-state__icon">
+                <LinkIcon />
+              </span>
+              <p className="empty-state__title">还没有常用入口</p>
+              <p className="empty-state__text">
+                把教务系统、图书馆、选课、网络认证这些天天要开的页面加进来，
+                下次就不用从浏览器书签里翻了。链接只保存在这台设备。
+              </p>
+            </div>
           ) : (
             groups.map((group) => (
               <div className="links-group" key={group.group}>

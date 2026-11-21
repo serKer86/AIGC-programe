@@ -189,3 +189,41 @@ export function GripIcon(props: IconProps) {
     </svg>
   )
 }
+export function CalculatorIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <rect x="4.5" y="3" width="15" height="18" rx="3.2" />
+      <path d="M8 7.5h8" />
+      <path d="M8.4 12h.01M12 12h.01M15.6 12h.01M8.4 16.2h.01M12 16.2h.01M15.6 16.2h.01" />
+    </svg>
+  )
+}
+
+export function ShrinkIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M9.5 4.5v5h-5" />
+      <path d="M14.5 4.5v5h5" />
+      <path d="M9.5 19.5v-5h-5" />
+      <path d="M14.5 19.5v-5h5" />
+    </svg>
+  )
+}

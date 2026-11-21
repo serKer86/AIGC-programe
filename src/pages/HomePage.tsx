@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+﻿import { useMemo, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { AppFooter } from '../components/AppFooter'
 import { HeroCarousel, type HeroSlide } from '../components/HeroCarousel'
@@ -6,8 +6,8 @@ import {
   ArrowRightIcon,
   ClipboardIcon,
   CloseIcon,
-  CompressIcon,
-  GridIcon,
+  ShrinkIcon,
+  CalculatorIcon,
   GripIcon,
   IdCardIcon,
   LinkIcon,
@@ -143,7 +143,7 @@ const TOOLS: ToolEntry[] = [
     status: '已上线',
     statusTone: 'ok',
     localOnly: true,
-    icon: <GridIcon />,
+    icon: <CalculatorIcon />,
   },
   {
     id: 'compress',
@@ -180,7 +180,7 @@ const TOOLS: ToolEntry[] = [
       cta: '去压缩图片',
       facts: ['批量处理', '指定 KB', '本机完成'],
     },
-    icon: <CompressIcon />,
+    icon: <ShrinkIcon />,
   },
   {
     id: 'links',
@@ -289,7 +289,6 @@ export function HomePage() {
           <div>
             <h1 className="brand__title">校园工具箱</h1>
             <p className="brand__subtitle">本地优先的校园办事工具</p>
-            <p className="brand__en">HANGZHOU DIANZI UNIVERSITY</p>
           </div>
         </div>
 

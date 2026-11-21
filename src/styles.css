@@ -17,8 +17,8 @@
   --bg-halo: #dbe7ff;
   --bg-halo-alt: #e5e3ff;
   --bg-grid: rgba(37, 99, 235, 0.055);
-  --radius-lg: 20px;
-  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
   --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
     0 12px 32px rgba(15, 23, 42, 0.06);
   --shadow-raise: inset 0 1px 0 rgba(255, 255, 255, 0.9),
@@ -949,15 +949,16 @@ a.tool-card:focus-visible {
 
 .card__title {
   margin: 0;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .card__desc {
-  margin: 6px 0 16px;
+  margin: 7px 0 16px;
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--muted);
 }
 
@@ -1103,10 +1104,15 @@ a.tool-card:focus-visible {
   background: #b91c1c;
 }
 
-.btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 1;
+  background: var(--surface-mute);
+  border-color: var(--border);
+  color: var(--muted);
   box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .btn__tag {
@@ -1954,8 +1960,8 @@ a.tool-card:focus-visible {
   justify-items: center;
   gap: 6px;
   padding-top: 2px;
-  font-size: 11.5px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.55;
   color: var(--muted);
   text-align: center;
 }
@@ -3843,10 +3849,10 @@ select.field__input {
 /* ---------- 品牌位英文名 ---------- */
 
 .brand__en {
-  margin: 3px 0 0;
-  font-size: 9px;
+  margin: 4px 0 0;
+  font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -4147,4 +4153,67 @@ a.about-links__val {
 
 a.about-links__val:hover {
   text-decoration: underline;
+}
+
+/* ---------- 作业提醒：底部固定条留白 ---------- */
+
+.app.app--homework {
+  padding-bottom: calc(92px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 640px) {
+  .app.app--homework {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
+
+/* 作业提醒页底部有固定说明条，角落按钮要抬起来避开 */
+@media (min-width: 1024px) {
+  .app--homework ~ .corner-about {
+    bottom: 68px;
+  }
+}
+
+/* ---------- 空状态 ---------- */
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 26px 18px;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+  text-align: center;
+}
+
+.empty-state__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--field-bg);
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.empty-state__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.empty-state__title {
+  margin: 2px 0 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.empty-state__text {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
 }
