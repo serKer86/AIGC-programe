@@ -1,12 +1,13 @@
-' ============================================================
-'  作业提醒后端 - 静默后台启动 / 守护
+﻿' ============================================================
+'  作业提醒后端 - 静默启动 / 守护
 '  - 由「任务计划程序」每 2 分钟调用一次（登录后自动触发）
 '  - 也可以在需要时双击手动启动
-'  - 已经在运行时不重复启动（避免抢端口），启动时写一行日志
+'  - 健康检查用 HTTP 探测，不启动任何子进程（避免每 2 分钟闪一下窗口）
+'  - 已经在运行时不重复启动，只在真正拉起时写一行日志
 ' ============================================================
 Option Explicit
 
-Dim fso, sh, baseDir, cmdFile, portBusy, logFile, stream, stamp
+Dim fso, sh, baseDir, cmdFile, logFile, stream, stamp
 
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set sh  = CreateObject("WScript.Shell")
@@ -17,20 +18,35 @@ logFile  = baseDir & "\backend\data\watchdog.log"
 
 If Not fso.FileExists(cmdFile) Then WScript.Quit 1
 
-' 1) 用 netstat 判断 8000 端口是否已被本机后端占用
-portBusy = False
-On Error Resume Next
-Dim exec, output, re
-Set exec = sh.Exec("cmd /c netstat -ano -p TCP")
-output = LCase(exec.StdOut.ReadAll)
-Set re = New RegExp
-re.Pattern = "127\.0\.0\.1:8000\s+\S+\s+listening"
-If re.Test(output) Then portBusy = True
-On Error GoTo 0
+' 1) 直接请求 /api/health 判断后端是否存活（不产生任何窗口）
+Function BackendAlive()
+  Dim http
+  BackendAlive = False
 
-If portBusy Then WScript.Quit 0
+  On Error Resume Next
+  Set http = CreateObject("WinHttp.WinHttpRequest.5.1")
+  If Err.Number <> 0 Then
+    Err.Clear
+    Set http = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+  End If
+  If Err.Number <> 0 Then
+    Err.Clear
+    Exit Function
+  End If
 
-' 2) 隐藏窗口启动（0 = 不显示窗口，False = 不等待退出）
+  http.SetTimeouts 2000, 2000, 2000, 2000
+  http.Open "GET", "http://127.0.0.1:8000/api/health", False
+  http.Send
+  If Err.Number = 0 Then
+    If http.Status = 200 Then BackendAlive = True
+  End If
+  Err.Clear
+  On Error GoTo 0
+End Function
+
+If BackendAlive() Then WScript.Quit 0
+
+' 2) 后端未响应：隐藏窗口启动（0 = 不显示窗口，False = 不等待退出）
 sh.CurrentDirectory = baseDir
 sh.Run "cmd /c """ & cmdFile & """ -silent", 0, False
 

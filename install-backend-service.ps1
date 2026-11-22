@@ -1,4 +1,4 @@
-# 把本机后端注册成 Windows 服务（需要管理员权限）
+﻿# 把本机后端注册成 Windows 服务（需要管理员权限）
 # 右键「使用 PowerShell 运行」，或在管理员 PowerShell 里执行：
 #   powershell -ExecutionPolicy Bypass -File .\install-backend-service.ps1
 
@@ -8,7 +8,11 @@ $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $principal = New-Object Security.Principal.WindowsPrincipal($identity)
 if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "需要管理员权限：请右键此脚本 -> 使用 PowerShell 运行（以管理员身份）" -ForegroundColor Yellow
-    Read-Host "按回车退出"
+    # 服务接管后关掉每 2 分钟的计划任务，避免两层重复
+schtasks /change /tn "ToolboxBackendWatchdog" /disable 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) { Write-Host "已禁用计划任务 ToolboxBackendWatchdog（改由服务接管）" -ForegroundColor Green }
+
+Read-Host "按回车退出"
     exit 1
 }
 
@@ -16,7 +20,11 @@ $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $wrapper = Join-Path $root 'service-backend.cmd'
 if (-not (Test-Path $wrapper)) {
     Write-Host "找不到 service-backend.cmd，终止" -ForegroundColor Red
-    Read-Host "按回车退出"
+    # 服务接管后关掉每 2 分钟的计划任务，避免两层重复
+schtasks /change /tn "ToolboxBackendWatchdog" /disable 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) { Write-Host "已禁用计划任务 ToolboxBackendWatchdog（改由服务接管）" -ForegroundColor Green }
+
+Read-Host "按回车退出"
     exit 1
 }
 
@@ -55,5 +63,9 @@ try {
     Write-Host "服务已安装，但健康检查失败：$($_.Exception.Message)" -ForegroundColor Yellow
     Write-Host "可查看日志：$root\backend\data\uvicorn.log"
 }
+
+# 服务接管后关掉每 2 分钟的计划任务，避免两层重复
+schtasks /change /tn "ToolboxBackendWatchdog" /disable 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) { Write-Host "已禁用计划任务 ToolboxBackendWatchdog（改由服务接管）" -ForegroundColor Green }
 
 Read-Host "按回车退出"
