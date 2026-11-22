@@ -6,6 +6,7 @@ import { CompressPage } from './pages/CompressPage'
 import { LinksPage } from './pages/LinksPage'
 import { GpaPage } from './pages/GpaPage'
 import { AboutPage } from './pages/AboutPage'
+import { BackendBanner } from './components/BackendBanner'
 import { CornerStack } from './components/CornerStack'
 import { DisclaimerGate } from './components/DisclaimerGate'
 import { recordToolOpen, toolIdForRoute } from './lib/usage'
@@ -62,6 +63,8 @@ export default function App() {
     <>
       {renderRoute(route)}
       <CornerStack />
+
+      <BackendBanner route={route} />
       <DisclaimerGate />
     </>
   )

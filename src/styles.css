@@ -4630,3 +4630,129 @@ a.about-links__val:hover {
   display: none;
 }
 
+/* ---------- 本机后端断线提示 ---------- */
+
+.backend-banner {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(520px, calc(100vw - 40px));
+  padding: 10px 12px;
+  border: 1px solid rgba(220, 38, 38, 0.28);
+  border-radius: 12px;
+  background: #fff6f6;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 14px 32px rgba(15, 23, 42, 0.14);
+  animation: backend-rise 180ms ease-out;
+}
+
+.backend-banner__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.16);
+}
+
+.backend-banner__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.backend-banner__body strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.backend-banner__body span {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.backend-banner__retry {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  background: #fff;
+  color: #b91c1c;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.backend-banner__retry:hover:not(:disabled) {
+  background: #fee2e2;
+}
+
+.backend-banner__retry:disabled {
+  color: var(--muted);
+  border-color: var(--border);
+  cursor: default;
+}
+
+.backend-banner__close {
+  flex: none;
+  padding: 0 2px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.backend-banner--ok {
+  border-color: rgba(22, 163, 74, 0.3);
+  background: #f2fbf5;
+}
+
+.backend-banner--ok .backend-banner__dot {
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.16);
+}
+
+@keyframes backend-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 作业页底部有固定说明条，提示条需要抬高 */
+.app--homework ~ .backend-banner {
+  bottom: 84px;
+}
+
+@media (max-width: 639px) {
+  .backend-banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+
+  .app--homework ~ .backend-banner {
+    bottom: 76px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backend-banner {
+    animation: none;
+  }
+}
