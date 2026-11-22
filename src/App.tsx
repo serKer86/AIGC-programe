@@ -6,7 +6,7 @@ import { CompressPage } from './pages/CompressPage'
 import { LinksPage } from './pages/LinksPage'
 import { GpaPage } from './pages/GpaPage'
 import { AboutPage } from './pages/AboutPage'
-import { AboutCornerButton } from './components/SchoolBrand'
+import { CornerStack } from './components/CornerStack'
 import { DisclaimerGate } from './components/DisclaimerGate'
 import { recordToolOpen, toolIdForRoute } from './lib/usage'
 
@@ -61,7 +61,7 @@ export default function App() {
   return (
     <>
       {renderRoute(route)}
-      <AboutCornerButton />
+      <CornerStack />
       <DisclaimerGate />
     </>
   )

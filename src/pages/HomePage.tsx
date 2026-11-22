@@ -326,6 +326,16 @@ export function HomePage() {
           <div className="hero-weather">
             <HeroCarousel slides={slides} />
             <WeatherChip />
+            <img
+              className="hero-mascot"
+              src={`${import.meta.env.BASE_URL}brand/paimon.png`}
+              alt=""
+              aria-hidden="true"
+              width={104}
+              height={104}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         )}
 

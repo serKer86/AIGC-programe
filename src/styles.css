@@ -3775,36 +3775,53 @@ select.field__input {
   letter-spacing: 0.04em;
 }
 
-/* 右下角「关于本网站」入口 */
-.corner-about {
+/* 右下角控件组：关于本网站 + 回到顶部 */
+.corner-stack {
   display: none;
 }
 
 @media (min-width: 1024px) {
-  .corner-about {
+  .corner-stack {
     position: fixed;
     right: 20px;
     bottom: 20px;
     z-index: 40;
-    display: inline-flex;
-    align-items: center;
+    display: grid;
     gap: 8px;
-    padding: 7px 14px 7px 8px;
+    justify-items: end;
+  }
+
+  .corner-top,
+  .corner-about {
     border: 1px solid var(--border);
-    border-radius: 999px;
     background: var(--surface-glass-2);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
       0 10px 24px rgba(15, 23, 42, 0.1);
     backdrop-filter: blur(8px);
     color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    opacity: 0.9;
+    opacity: 0.92;
     transition: color 160ms ease, opacity 160ms ease, transform 160ms ease,
       box-shadow 160ms ease, border-color 160ms ease;
   }
 
+  .corner-top {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    animation: corner-rise 180ms ease-out;
+  }
+
+  .corner-top svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .corner-top:hover,
+  .corner-top:focus-visible,
   .corner-about:hover,
   .corner-about:focus-visible {
     opacity: 1;
@@ -3813,6 +3830,17 @@ select.field__input {
     border-color: rgba(37, 99, 235, 0.28);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05),
       0 14px 30px rgba(15, 23, 42, 0.16);
+  }
+
+  .corner-about {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 8px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
   }
 
   .corner-about__emblem {
@@ -3827,9 +3855,60 @@ select.field__input {
   }
 }
 
+@keyframes corner-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .corner-top,
   .corner-about {
     transition: none;
+    animation: none;
+  }
+}
+
+/* ---------- 首屏吉祥物 ---------- */
+
+.hero-mascot {
+  display: none;
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  z-index: 1;
+  width: 104px;
+  height: 104px;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 16px rgba(15, 23, 42, 0.16));
+  animation: mascot-bob 5s ease-in-out infinite;
+}
+
+@media (min-width: 1024px) {
+  .hero-mascot {
+    display: block;
+  }
+}
+
+@keyframes mascot-bob {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(calc(-50% - 6px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mascot {
+    animation: none;
   }
 }
 /* 首页品牌位改用校徽（白底圆角方块，和其余页面的图标块保持同一尺寸语言） */
@@ -4169,7 +4248,7 @@ a.about-links__val:hover {
 
 /* 作业提醒页底部有固定说明条，角落按钮要抬起来避开 */
 @media (min-width: 1024px) {
-  .app--homework ~ .corner-about {
+  .app--homework ~ .corner-stack {
     bottom: 68px;
   }
 }
@@ -4531,3 +4610,23 @@ a.about-links__val:hover {
     width: auto;
   }
 }
+/* 宽内容页（1120）在 1280 宽屏下没有右侧留白，角落按钮收成圆形，避免压住卡片 */
+.app--kzt ~ .corner-stack .corner-about,
+.app--homework ~ .corner-stack .corner-about,
+.app--compress ~ .corner-stack .corner-about,
+.app--links ~ .corner-stack .corner-about,
+.app--gpa ~ .corner-stack .corner-about {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+.app--kzt ~ .corner-stack .corner-about__text,
+.app--homework ~ .corner-stack .corner-about__text,
+.app--compress ~ .corner-stack .corner-about__text,
+.app--links ~ .corner-stack .corner-about__text,
+.app--gpa ~ .corner-stack .corner-about__text {
+  display: none;
+}
+
