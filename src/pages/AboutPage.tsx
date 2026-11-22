@@ -55,6 +55,7 @@ const TECH = [
 ]
 
 const CHANGELOG = [
+  ['v1.9', '右下角加入回到顶部，首屏右侧加入吉祥物插图'],
   ['v1.8', '首页天气：下沙 / 绍兴校区切换、今日高低温、明日预报，每 30 分钟自动刷新'],
   ['v1.7', '校园网址支持进入管理模式后拖动排序'],
   ['v1.6', '视觉细节统一：字号层级、圆角、空状态、禁用态与图标'],
@@ -245,7 +246,7 @@ export function AboutPage() {
             </li>
             <li>
               <span className="about-links__key">当前版本</span>
-              <span className="about-links__val">v1.8</span>
+              <span className="about-links__val">v1.9</span>
             </li>
             <li>
               <span className="about-links__key">公网站点</span>
