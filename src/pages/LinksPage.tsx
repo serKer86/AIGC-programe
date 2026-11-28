@@ -66,6 +66,16 @@ function FeedbackLine({ feedback }: { feedback: Feedback | null }) {
   )
 }
 
+/** 同域名 + 同路径视为同一个入口（忽略 ticket、t 之类的临时参数） */
+function linkKey(url: string): string {
+  try {
+    const parsed = new URL(url)
+    return parsed.origin + parsed.pathname.replace(/\/+$/, '')
+  } catch {
+    return url
+  }
+}
+
 export function LinksPage() {
   const [localLinks, setLocalLinks] = useState<SchoolLink[]>(readLocalLinks)
   const [icons, setIcons] = useState<IconMap>(readLinkIcons)
@@ -79,7 +89,12 @@ export function LinksPage() {
   const iconInputRef = useRef<HTMLInputElement>(null)
   const iconTargetRef = useRef<string | null>(null)
 
-  const allLinks = useMemo<SchoolLink[]>(() => [...PRESET_LINKS, ...localLinks], [localLinks])
+  const allLinks = useMemo<SchoolLink[]>(() => {
+    // 预置入口优先；用户本地已有的同一页面（同域名+同路径，忽略参数）不再重复展示
+    const presetKeys = new Set(PRESET_LINKS.map((link) => linkKey(link.url)))
+    const extra = localLinks.filter((link) => !presetKeys.has(linkKey(link.url)))
+    return [...PRESET_LINKS, ...extra]
+  }, [localLinks])
   const [order, setOrder] = useState<string[]>(readLinkOrder)
   const orderedLinks = useMemo(() => applyLinkOrder(allLinks, order), [allLinks, order])
   const groups = useMemo(() => groupLinks(orderedLinks), [orderedLinks])

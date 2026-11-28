@@ -14,7 +14,21 @@ const LINKS_STORAGE_KEY = 'toolbox.links.v1'
 export const DEFAULT_GROUP = '其他'
 
 // 预置链接在这里补充：{ id, name, url, group, icon }
-export const PRESET_LINKS: SchoolLink[] = []
+export const PRESET_LINKS: SchoolLink[] = [
+  { id: 'preset-hdu', name: '杭电官网', url: 'https://www.hdu.edu.cn/', group: '常用' },
+  { id: 'preset-hduhelp', name: '杭电助手', url: 'https://neo.hduhelp.com/navigation/emptySchedule', group: '常用' },
+  { id: 'preset-erke', name: '第二课堂', url: 'https://erke.hdu.edu.cn/weixin/', group: '常用' },
+  { id: 'preset-smartestu', name: '数你最灵', url: 'https://smartestu.cn/login', group: '常用' },
+  { id: 'preset-luogu', name: '洛谷', url: 'https://www.luogu.com.cn/', group: '常用' },
+  { id: 'preset-chaoxing', name: '学习通', url: 'https://i.mooc.chaoxing.com/space/index', group: '常用' },
+  { id: 'preset-chsi', name: '学信网', url: 'https://www.chsi.com.cn/', group: '常用' },
+  {
+    id: 'preset-framepacker',
+    name: 'FramePacker',
+    url: 'https://www.framepacker.cn/pages/video-to-frames/video-to-frames',
+    group: '常用',
+  },
+]
 
 function createId(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
